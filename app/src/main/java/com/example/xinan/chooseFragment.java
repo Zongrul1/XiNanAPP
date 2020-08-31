@@ -47,12 +47,23 @@ public class chooseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        requestIndex();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String indexString = prefs.getString("index", null);
+        if(indexString == null) {
+            requestIndex();
+        }
+        else{
+            Utility.handleMessageResponse(messages,indexString);
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Message m = messages.get(position);
-                Toast.makeText(getContext(), m.getNote(), Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(getActivity(),ShowActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("id", String.valueOf(m.getId()));
+                intent.putExtras(bundle);
+                startActivity(intent);
 //                Intent intent = new Intent();
 //                intent.setData(Uri.parse());//Url 就是你要打开的网址
 //                intent.setAction(Intent.ACTION_VIEW);
@@ -62,8 +73,8 @@ public class chooseFragment extends Fragment {
     }
 
     public void requestIndex() {
-        String weatherUrl = "https://xnxz.top/wc/switch";
-        HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
+        String Url = "https://xnxz.top/wc/switch";
+        HttpUtil.sendOkHttpRequest(Url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
@@ -71,6 +82,9 @@ public class chooseFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+                        editor.putString("index", responseText);
+                        editor.apply();
                         adapter.notifyDataSetChanged();
                         listView.setSelection(0);
                     }

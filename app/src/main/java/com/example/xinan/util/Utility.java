@@ -1,5 +1,6 @@
 package com.example.xinan.util;
 
+import com.example.xinan.db.Content;
 import com.example.xinan.db.Message;
 import com.google.gson.Gson;
 
@@ -22,5 +23,16 @@ public class Utility {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public static Content handleContentResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response).getJSONObject("Data");
+            String MessageContent = jsonObject.toString();
+            System.out.println(MessageContent);
+            return new Gson().fromJson(MessageContent, Content.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
