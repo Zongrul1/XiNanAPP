@@ -5,14 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.xinan.db.Message;
+import com.example.xinan.db.News;
 
 import java.util.List;
 
-public class MessageAdapter extends ArrayAdapter<Message> {
+public class NewsAdapter extends ArrayAdapter<News> {
     static class ViewHolder {
         TextView title;
         TextView note;
@@ -20,14 +19,14 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
     private int resourceId;
 
-    public MessageAdapter(Context context, int resource, List<Message> objects) {
+    public NewsAdapter(Context context, int resource, List<News> objects) {
         super(context, resource, objects);
         resourceId = resource;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Message message = getItem(position);
+        News news = getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -40,8 +39,8 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         }
         viewHolder.title = (TextView)view.findViewById(R.id.list_example_text1);
         viewHolder.note = (TextView)view.findViewById(R.id.list_example_text2);
-        viewHolder.title.setText(message.getTitle());
-        viewHolder.note.setText(message.getNote());
+        viewHolder.title.setText(news.getTitle());
+        viewHolder.note.setText(news.getNote());
 
         return view;
     }

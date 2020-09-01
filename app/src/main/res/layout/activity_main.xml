@@ -20,21 +20,27 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
         <Button
+            android:id="@+id/send"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:layout_marginLeft="30dp"
             android:background="@drawable/send"
             android:layout_alignParentLeft="true"
-            android:text="发布"
-            android:textSize="30dp"/>
+            android:text="\n发布\n发物品"
+            android:gravity="left"
+            android:drawableTop="@drawable/board"
+            android:textSize="20dp"/>
         <Button
+            android:id="@+id/search"
             android:layout_width="150dp"
             android:layout_height="200dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/search"
             android:layout_alignParentRight="true"
-            android:text="搜索"
-            android:textSize="30dp"/>
+            android:text="\n寻找\n找东西"
+            android:gravity="left"
+            android:drawableTop="@drawable/board"
+            android:textSize="20dp"/>
     </RelativeLayout>
     <fragment
         android:layout_marginTop="20dp"

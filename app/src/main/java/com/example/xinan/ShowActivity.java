@@ -14,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.tu.loadingdialog.LoadingDailog;
 import com.example.xinan.db.Content;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.Utility;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +29,7 @@ import okhttp3.Response;
 
 public class ShowActivity extends AppCompatActivity {
     private Button back;
-    private MyImageView avater;
+    private ImageView avater;
     private TextView nickname;
     private TextView time;
     private TextView tag;
@@ -53,6 +56,20 @@ public class ShowActivity extends AppCompatActivity {
         pic = findViewById(R.id.pic);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String indexString = prefs.getString(name, null);
+        //loading
+        LoadingDailog.Builder loadBuilder=new LoadingDailog.Builder(this)
+                .setMessage("加载中...")
+                .setCancelable(false)
+                .setCancelOutside(false);
+        final LoadingDailog dialog=loadBuilder.create();
+        dialog.show();
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                dialog.dismiss();
+                t.cancel();
+            }
+        }, 2000);
         if(indexString == null) {
             requestContent();
         }
@@ -65,8 +82,7 @@ public class ShowActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(ShowActivity.this,MainActivity.class);
-                        startActivity(intent);
+                            ShowActivity.this.finish();
                     }
                 });
     }
@@ -104,6 +120,5 @@ public class ShowActivity extends AppCompatActivity {
         price.setText("￥" + String.valueOf(con.getPrice()));
         tag.setText(con.getTitle());
         pic.setImageURL("http://img.xnxz.top/"+ con.getPic());
-        avater.setImageURL("http://img.xnxz.top/"+ con.getPic());
     }
 }

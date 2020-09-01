@@ -1,13 +1,13 @@
 package com.example.xinan.db;
 
-public class Message {
+public class News {
     // fruitName to store the string of fruit name
     private String Title;
     private String Desc;
     private int Id;
     private String Url;
 
-    public Message(String title,String note,int Id,String Url) {
+    public News(String title, String note, int Id, String Url) {
         this.Title = title;
         this.Desc = note;
         this.Id = Id;
