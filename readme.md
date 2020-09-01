@@ -20,13 +20,13 @@
 
 ## V0.7
 ### 版本日志
-1.增加了全局搜索的页面（搜索框尚未完成）
-2.制作了LoadingDialog，参考自[https://github.com/gittjy/LoadingDialog](https://github.com/gittjy/LoadingDialog)
-3.修改了小部分界面设计问题
+1.增加了全局搜索的页面（搜索框尚未完成）  
+2.制作了LoadingDialog，参考自[https://github.com/gittjy/LoadingDialog](https://github.com/gittjy/LoadingDialog)  
+3.修改了小部分界面设计问题  
 
 ### 存在问题
-1.缓存和实时请求问题，请求速度有点慢，可进行缓存会失去实时性
-2.token时限和鉴权问题
-
+1.缓存和实时请求问题，请求速度有点慢，可进行缓存会失去实时性  
+2.token时限和鉴权问题  
+ 
 效果如图：  
 ![](V0.7.gif)
