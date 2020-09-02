@@ -29,6 +29,23 @@
             android:layout_centerInParent="true"
             android:gravity="center"/>
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:drawableTop="@drawable/board">
+        </EditText>
+        <Button
+            android:id="@+id/find"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="找一找"
+            android:layout_alignParentRight="true"></Button>
+    </RelativeLayout>
     <fragment
         android:layout_marginTop="20dp"
         android:id="@+id/choose_area_fragment"

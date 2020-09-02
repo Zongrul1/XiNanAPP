@@ -1,8 +1,11 @@
 package com.example.xinan;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,7 +35,26 @@ import okhttp3.Response;
 public class searchChooseFragment extends Fragment {
     private ListView listView;
     private ContentAdapter adapter;
+    private SearchActivity searchActivity;
     List<Content> cons = new ArrayList<>();
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle bundle = msg.getData();
+            requestSearch(bundle.getString("search"));
+            //在这里实现ui更新的效果
+        }
+    };
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        searchActivity = (SearchActivity) context;
+        searchActivity.setHandler(handler);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,13 +84,8 @@ public class searchChooseFragment extends Fragment {
             }
         }, 2000);
         //request
-        String indexString = prefs.getString("search", null);
-        if(indexString == null) {
-            requestSearch();
-        }
-        else{
-            Utility.handleContentResponse(cons,indexString);
-        }
+        //String indexString = prefs.getString("search", null);
+        requestSearch("");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,19 +99,17 @@ public class searchChooseFragment extends Fragment {
         });
     }
 
-    public void requestSearch() {
-        String Url = "https://xnxz.top/wc/getCard?type=1&page=1&search=";
+    public void requestSearch(String key) {
+        String Url = "https://xnxz.top/wc/getCard?type=1&page=1&search="+key;
         HttpUtil.sendOkHttpRequest(Url, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseText = response.body().string();
+                cons.clear();
                 Utility.handleContentResponse(cons,responseText);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-//                        editor.putString("search", responseText);
-//                        editor.apply();
                         adapter.notifyDataSetChanged();
                         listView.setSelection(0);
                     }

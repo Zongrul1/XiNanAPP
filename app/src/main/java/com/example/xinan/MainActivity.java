@@ -42,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         Rect r = new Rect(0, 0, drawables1[1].getMinimumWidth() * 2 / 5, drawables1[1].getMinimumHeight() * 2 / 5); //设置图片参数
         drawables1[1].setBounds(r);
         send.setCompoundDrawables(null,null,drawables1[1],null);  //设置到控件的位置（左，上，右，下）
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,SendActivity.class);
+                startActivity(intent);
+            }
+        });
         search = (Button)findViewById(R.id.search);
         Drawable[] drawables2 = search.getCompoundDrawables(); //获取图片
         r = new Rect(0, 0, drawables2[1].getMinimumWidth() * 2 / 5, drawables2[1].getMinimumHeight() * 2 / 5); //设置图片参数
