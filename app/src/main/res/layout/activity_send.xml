@@ -31,7 +31,7 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="220dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +45,7 @@
                 android:textSize="20sp">
             </TextView>
             <EditText
+                android:id="@+id/title"
                 android:layout_marginLeft="10dp"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
@@ -63,6 +64,7 @@
                 android:textSize="20sp">
             </TextView>
             <EditText
+                android:id="@+id/tag"
                 android:layout_marginLeft="10dp"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
@@ -104,13 +106,13 @@
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="130dp"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/name_text"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -118,7 +120,8 @@
                 android:text="叫我">
             </TextView>
             <EditText
-                android:layout_toRightOf="@+id/name"
+                android:id="@+id/name"
+                android:layout_toRightOf="@+id/name_text"
                 android:layout_width="240dp"
                 android:layout_height="40dp">
             </EditText>
@@ -147,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
-                android:id="@+id/number"
+                android:id="@+id/number_text"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -155,12 +158,23 @@
                 android:text="号码">
             </TextView>
             <EditText
-                android:layout_toRightOf="@+id/number"
+                android:id="@+id/number"
+                android:layout_toRightOf="@+id/number_text"
                 android:layout_width="240dp"
                 android:layout_height="40dp">
             </EditText>
         </RelativeLayout>
     </LinearLayout>
+    <Button
+        android:id="@+id/send"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="发布"
+        android:textSize="26sp"
+        android:textColor="#FFF"
+        android:background="@color/send"
+        android:gravity="center"
+        android:layout_gravity="center"></Button>
 
 
 

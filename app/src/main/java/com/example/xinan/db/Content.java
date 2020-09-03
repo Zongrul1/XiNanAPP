@@ -28,6 +28,12 @@ public class Content {
     private String Tips;
     private String NickColor;
 
+    public Content(String title,String tag,String name,String contact){
+        Title = title;
+        Tag = tag;
+        Name = name;
+        Contact = contact;
+    }
     public int getId() {
         return Id;
     }

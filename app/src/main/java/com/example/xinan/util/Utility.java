@@ -3,6 +3,7 @@ package com.example.xinan.util;
 import com.example.xinan.db.Content;
 import com.example.xinan.db.News;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,6 +44,19 @@ public class Utility {
             System.out.println(MessageContent);
             return new Gson().fromJson(MessageContent, Content.class);
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String ContentToJson(Content con){
+        try{
+            //当使用gson把实体转换成json时，如果实体中存在字段的值为NULL的话，那么转换出来的json字符串中将不存在对应的字段，这里就不应该使用Gson gson = new Gson();
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            String obj=gson.toJson(con);
+            return obj;
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         return null;
