@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.android.tu.loadingdialog.LoadingDailog;
+import com.example.xinan.Adapter.ContentAdapter;
 import com.example.xinan.db.Content;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.Utility;

@@ -1,4 +1,4 @@
-package com.example.xinan;
+package com.example.xinan.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.xinan.R;
 import com.example.xinan.db.News;
 
 import java.util.List;

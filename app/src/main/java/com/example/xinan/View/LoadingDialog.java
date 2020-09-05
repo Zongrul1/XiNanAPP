@@ -1,4 +1,4 @@
-package com.example.xinan;
+package com.example.xinan.View;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.xinan.R;
 
 /**
  * Created by tjy on 2017/6/19.

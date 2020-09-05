@@ -1,4 +1,4 @@
-package com.example.xinan;
+package com.example.xinan.Adapter;
 
 import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;

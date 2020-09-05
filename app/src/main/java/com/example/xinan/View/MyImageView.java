@@ -1,4 +1,4 @@
-package com.example.xinan;
+package com.example.xinan.View;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,7 +31,7 @@ public class MyImageView extends androidx.appcompat.widget.AppCompatImageView {
                     Toast.makeText(getContext(),"网络连接失败",Toast.LENGTH_SHORT).show();
                     break;
                 case SERVER_ERROR:
-                    Toast.makeText(getContext(),"服务器发生错误",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"没有图片",Toast.LENGTH_SHORT).show();
                     break;
             }
         }

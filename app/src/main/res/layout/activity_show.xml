@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
-                <com.example.xinan.MyImageView
+                <com.example.xinan.View.MyImageView
                     android:layout_marginTop="30dp"
                     android:id="@+id/pic"
                     android:layout_width="360dp"

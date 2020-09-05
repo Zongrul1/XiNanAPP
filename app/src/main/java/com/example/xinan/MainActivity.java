@@ -4,18 +4,31 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.xinan.Adapter.MyPagerAdapter;
+import com.example.xinan.util.HttpUtil;
+import com.example.xinan.util.Utility;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager vp;
@@ -57,9 +70,21 @@ public class MainActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SearchActivity.class);
-                startActivity(intent);
+        Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+        startActivity(intent);
             }
         });
     }
+
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+//            Intent intent = new Intent();// 创建Intent对象
+//            intent.setAction(Intent.ACTION_MAIN);// 设置Intent动作
+//            intent.addCategory(Intent.CATEGORY_HOME);// 设置Intent种类
+//            startActivity(intent);// 将Intent传递给Activity
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }
