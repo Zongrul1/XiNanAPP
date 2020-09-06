@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="send">#FFD700</color>
+    <color name="sendPress">#E2A76F</color>
     <color name="search">#87CEEB</color>
+    <color name="searchPress">#659EC7</color>
     <color name="money">#00FA9A</color>
+
+
 </resources>

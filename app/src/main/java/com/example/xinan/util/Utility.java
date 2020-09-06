@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
@@ -27,6 +28,7 @@ public class Utility {
             e.printStackTrace();
         }
     }
+
     public static void handleContentResponse(List<Content> cons, String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -44,27 +46,12 @@ public class Utility {
         try {
             JSONObject jsonObject = new JSONObject(response).getJSONObject("Data");
             String MessageContent = jsonObject.toString();
-            System.out.println(MessageContent);
             return new Gson().fromJson(MessageContent, Content.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
-    public static String ContentToJson(Content con){
-        try{
-            //当使用gson把实体转换成json时，如果实体中存在字段的值为NULL的话，那么转换出来的json字符串中将不存在对应的字段，这里就不应该使用Gson gson = new Gson();
-            Gson gson = new GsonBuilder().serializeNulls().create();
-            String obj=gson.toJson(con);
-            return obj;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public static String UserToJson(){
         try{
             //当使用gson把实体转换成json时，如果实体中存在字段的值为NULL的话，那么转换出来的json字符串中将不存在对应的字段，这里就不应该使用Gson gson = new Gson();

@@ -1,18 +1,20 @@
 package com.example.xinan;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
-import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tu.loadingdialog.LoadingDailog;
 import com.example.xinan.View.MyImageView;
+import com.example.xinan.View.CircleImageView;
 import com.example.xinan.db.Content;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.Utility;
@@ -27,7 +29,8 @@ import okhttp3.Response;
 
 public class ShowActivity extends AppCompatActivity {
     private Button back;
-    private ImageView avater;
+    private CircleImageView avater;
+    private TextView head;
     private TextView nickname;
     private TextView time;
     private TextView tag;
@@ -42,9 +45,11 @@ public class ShowActivity extends AppCompatActivity {
         //新页面接收数据
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
+        Typeface typeface = ResourcesCompat.getFont(this,R.font.az);
         name = bundle.getString("id");
         setContentView(R.layout.activity_show);
         back = findViewById(R.id.back);
+        head = findViewById(R.id.head);
         avater = findViewById(R.id.avater);
         nickname = findViewById(R.id.nickname);
         time = findViewById(R.id.time);
@@ -52,8 +57,9 @@ public class ShowActivity extends AppCompatActivity {
         price = findViewById(R.id.price);
         fulltext = findViewById(R.id.fulltext);
         pic = findViewById(R.id.pic);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String indexString = prefs.getString(name, null);
+        avater = findViewById(R.id.avater);
+        back.setTypeface(typeface);
+        head.setTypeface(typeface);
         //loading
         LoadingDailog.Builder loadBuilder=new LoadingDailog.Builder(this)
                 .setMessage("加载中...")
@@ -68,14 +74,7 @@ public class ShowActivity extends AppCompatActivity {
                 t.cancel();
             }
         }, 2000);
-        if(indexString == null) {
-            requestContent();
-        }
-        else{
-            showinfo(Utility.handleContentResponse(indexString));
-            //requestContent();
-        }
-
+        requestContent();
         back.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -83,6 +82,7 @@ public class ShowActivity extends AppCompatActivity {
                             ShowActivity.this.finish();
                     }
                 });
+
     }
 
     public void requestContent() {
@@ -96,9 +96,6 @@ public class ShowActivity extends AppCompatActivity {
                 {
                     @Override
                     public void run() {
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                        editor.putString(name, responseText);
-                        editor.apply();
                         showinfo(con);
                     }
                 });

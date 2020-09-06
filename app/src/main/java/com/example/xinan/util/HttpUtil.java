@@ -1,5 +1,7 @@
 package com.example.xinan.util;
 
+import com.example.xinan.db.Content;
+
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -12,19 +14,39 @@ public class HttpUtil {
     public static void setToken(String token){
         cookie = token;
     }
+    public static String getToken(){
+        return cookie;
+    }
     public static void sendOkHttpRequest(String address, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).addHeader("Cookie", cookie).build();
         client.newCall(request).enqueue(callback);
     }
-
+    //for cookie
     public static void postOkHttpRequest(String address,okhttp3.Callback callback) {
         RequestBody formBody = new FormBody.Builder()
                 .add("account", "test")
                 .add("password", "test")
-                .build();
+                .build();//临时措施
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).post(formBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+    //for send
+    public static void postOkHttpRequest(String address,Content con, okhttp3.Callback callback) {
+        RequestBody formBody = new FormBody.Builder()
+                .add("title", con.getTitle())
+                .add("price", "")
+                .add("desc", con.getDescription())
+                .add("tag", con.getTag())
+                .add("pic", "")
+                .add("name", con.getName())
+                .add("contact_type", String.valueOf(con.getContactType()))
+                .add("contact", con.getContact())
+                .add("type", String.valueOf(con.getType()))
+                .build();//临时措施
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(address).post(formBody).addHeader("Cookie",cookie).build();
         client.newCall(request).enqueue(callback);
     }
 }

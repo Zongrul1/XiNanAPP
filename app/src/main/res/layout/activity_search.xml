@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity"
     android:orientation="vertical">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -18,9 +26,10 @@
             android:textColor="#FFF"
             android:textSize="20sp"
             android:layout_marginLeft="15dp"
-            android:background="@color/search"
+            android:background="#00000000"
             android:layout_marginStart="15dp" />
         <TextView
+            android:id="@+id/head"
             android:layout_width="160dp"
             android:layout_height="match_parent"
             android:text="寻找失物"
@@ -37,7 +46,7 @@
             android:layout_width="300dp"
             android:layout_height="40dp"
             android:layout_marginLeft="5dp"
-            android:drawableTop="@drawable/board">
+            android:drawableTop="@drawable/lens">
         </EditText>
         <Button
             android:id="@+id/find"
@@ -46,10 +55,13 @@
             android:text="找一找"
             android:layout_alignParentRight="true"></Button>
     </RelativeLayout>
+    </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <fragment
         android:layout_marginTop="20dp"
         android:id="@+id/choose_area_fragment"
-        android:name="com.example.xinan.searchChooseFragment"
+        android:name="com.example.xinan.searchFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </LinearLayout>

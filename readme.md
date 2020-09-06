@@ -1,6 +1,45 @@
 # 西南闲置app试作
 ![](mini.png)
 
+## V1.0
+### 版本日志
+1.完成了发布功能，可以在客户端发布相关的拾物信息了，照旧使用okhttp实现,意味着app基本功能已经全部实现。  
+2.重新制作了UI。  
+**总体**  
+1.引入了外部字体(Typeface typeface = ResourcesCompat.getFont(this,R.font.az))    
+2.移除了sharedprefercence机制     
+3.优化cookie获取    
+**主页**
+1.viewpager开辟了一条线程用于定时刷新banner   
+2.更改了主页ListView的样式   
+3.重写onresume实现刷新  
+4.实现了下拉刷新（SwipeRefreshLayout）  
+**搜索页**  
+1.更改ListView间隔   
+2.使用圆框头像（参考自//https://www.jianshu.com/p/a5be5d3a0a05）  
+3.实现了下拉刷新（SwipeRefreshLayout）  
+**内容页**  
+1.更改基本样式   
+2.使用圆框头像（参考自//https://www.jianshu.com/p/a5be5d3a0a05）   
+**发布页**  
+1.更改了样式  
+
+
+### 接下来的任务
+1.图片发送  
+2.闲置物品  
+3.点赞显示  
+
+发布效果如图：  
+![](gif/V1.0A.gif)
+
+主页ViewPager自动刷新效果如图：  
+![](gif/V1.0B.gif)
+
+
+
+
+
 ## V0.90
 ### 版本日志
 1.完成了鉴权问题，每次启动时会获取cookie（使用okhttp的post），不需要再人工问后端小伙伴获取临时token，每次启动时先进行获取cookie，获取成功后使用handler调用requestIndex（）去刷新主页。  
