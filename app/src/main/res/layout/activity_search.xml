@@ -9,7 +9,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="150dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -44,17 +44,41 @@
         <EditText
             android:id="@+id/search"
             android:layout_width="300dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="5dp"
             android:drawableTop="@drawable/lens">
         </EditText>
         <Button
             android:id="@+id/find"
+            android:layout_marginTop="10dp"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="找一找"
+            android:background="@drawable/search"
             android:layout_alignParentRight="true"></Button>
     </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:text="查看内容"
+                    android:gravity="center_vertical"
+                    android:textSize="20sp"></TextView>
+                <ToggleButton
+                    android:id="@+id/change"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:textOn="闲置物品"
+                    android:textOff="失物招领"
+                    android:background="@drawable/search">
+                </ToggleButton>
+            </RelativeLayout>
     </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <fragment

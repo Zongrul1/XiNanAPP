@@ -50,7 +50,7 @@ public class ContentAdapter extends ArrayAdapter<Content> {
         viewHolder.name.setText(con.getNick());
         viewHolder.tag.setText(con.getTag());
         viewHolder.description.setText(con.getDescription());
-        viewHolder.title.setText(con.getTag());
+        viewHolder.title.setText(con.getTitle());
         viewHolder.time.setText(con.getDateBt());
 
         return view;

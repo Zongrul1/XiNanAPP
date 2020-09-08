@@ -28,6 +28,7 @@ public class CircleImageView extends androidx.appcompat.widget.AppCompatImageVie
     private int mSize;
     private Paint mPaint;
     private Xfermode mPorterDuffXfermode;
+    private boolean first;
 
     public CircleImageView(Context context) {
         this(context,null);
@@ -40,14 +41,15 @@ public class CircleImageView extends androidx.appcompat.widget.AppCompatImageVie
     public CircleImageView(Context context,AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+
     }
 
     private void init(){
         mPaint = new Paint();
         mPaint.setDither(true);
         mPaint.setAntiAlias(true);
-
         mPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+        first = false;
     }
 
     @Override
@@ -64,13 +66,12 @@ public class CircleImageView extends androidx.appcompat.widget.AppCompatImageVie
         //获取sourceBitmap，即通过xml或者java设置进来的图片
         Drawable drawable = getDrawable();
         if (drawable == null) return;
-
         Bitmap sourceBitmap = ((BitmapDrawable)getDrawable()).getBitmap();
         if (sourceBitmap != null){
             //对图片进行缩放，以适应控件的大小
             Bitmap bitmap = resizeBitmap(sourceBitmap,getWidth(),getHeight());
-            drawCircleBitmapByXfermode(canvas,bitmap);    //(1)利用PorterDuffXfermode实现
-            //drawCircleBitmapByShader(canvas,bitmap);    //(2)利用BitmapShader实现
+            //drawCircleBitmapByXfermode(canvas,bitmap);    //(1)利用PorterDuffXfermode实现
+            drawCircleBitmapByShader(canvas,bitmap);    //(2)利用BitmapShader实现
         }
     }
 
@@ -90,13 +91,26 @@ public class CircleImageView extends androidx.appcompat.widget.AppCompatImageVie
     }
 
     private void drawCircleBitmapByXfermode(Canvas canvas,Bitmap bitmap){
-        final int sc = canvas.saveLayer(0,0,getWidth(),getHeight(),null,Canvas.ALL_SAVE_FLAG);
+        int sc;
+        if(!first) {
+            sc = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
+        }
+        else{
+            sc = canvas.save();
+        }
         //绘制dst层
         canvas.drawCircle(mSize / 2,mSize / 2,mSize / 2,mPaint);
         //设置图层混合模式为SRC_IN
         mPaint.setXfermode(mPorterDuffXfermode);
         //绘制src层
-        canvas.drawBitmap(bitmap,0,0,mPaint);
+        canvas.drawBitmap(bitmap, 0, 0, mPaint);
         canvas.restoreToCount(sc);
+        first = true;
+    }
+
+    private void drawCircleBitmapByShader(Canvas canvas,Bitmap bitmap){
+        BitmapShader shader = new BitmapShader(bitmap,BitmapShader.TileMode.CLAMP,BitmapShader.TileMode.CLAMP);
+        mPaint.setShader(shader);
+        canvas.drawCircle(mSize / 2,mSize /2 ,mSize / 2,mPaint);
     }
 }

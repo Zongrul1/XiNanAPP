@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tu.loadingdialog.LoadingDailog;
+import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.db.Content;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.Utility;
@@ -101,11 +102,11 @@ public class SendActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //loading
-                                LoadingDailog.Builder loadBuilder=new LoadingDailog.Builder(SendActivity.this)
-                                        .setMessage("发送中...")
+                                LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(SendActivity.this)
+                                        .setMessage("加载中...")
                                         .setCancelable(false)
                                         .setCancelOutside(false);
-                                final LoadingDailog dialog=loadBuilder.create();
+                                final LoadingDialog dialog=loadBuilder.create();
                                 dialog.show();
                                 final Timer t = new Timer();
                                 t.schedule(new TimerTask() {

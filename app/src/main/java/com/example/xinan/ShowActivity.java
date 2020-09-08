@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.tu.loadingdialog.LoadingDailog;
+import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.View.MyImageView;
 import com.example.xinan.View.CircleImageView;
 import com.example.xinan.db.Content;
@@ -29,7 +29,6 @@ import okhttp3.Response;
 
 public class ShowActivity extends AppCompatActivity {
     private Button back;
-    private CircleImageView avater;
     private TextView head;
     private TextView nickname;
     private TextView time;
@@ -50,22 +49,20 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
         back = findViewById(R.id.back);
         head = findViewById(R.id.head);
-        avater = findViewById(R.id.avater);
         nickname = findViewById(R.id.nickname);
         time = findViewById(R.id.time);
         tag = findViewById(R.id.tag);
         price = findViewById(R.id.price);
         fulltext = findViewById(R.id.fulltext);
         pic = findViewById(R.id.pic);
-        avater = findViewById(R.id.avater);
         back.setTypeface(typeface);
         head.setTypeface(typeface);
         //loading
-        LoadingDailog.Builder loadBuilder=new LoadingDailog.Builder(this)
+        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(this)
                 .setMessage("加载中...")
                 .setCancelable(false)
                 .setCancelOutside(false);
-        final LoadingDailog dialog=loadBuilder.create();
+        final LoadingDialog dialog=loadBuilder.create();
         dialog.show();
         final Timer t = new Timer();
         t.schedule(new TimerTask() {

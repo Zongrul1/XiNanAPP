@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.android.tu.loadingdialog.LoadingDailog;
 import com.example.xinan.Adapter.NewsAdapter;
 import com.example.xinan.Service.UpdateService;
+import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.db.News;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.Utility;
@@ -99,11 +100,11 @@ public class chooseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if(HttpUtil.getToken() == null) requestCookie();
         //loading
-        LoadingDailog.Builder loadBuilder=new LoadingDailog.Builder(getContext())
+        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(getContext())
                 .setMessage("加载中...")
                 .setCancelable(false)
                 .setCancelOutside(false);
-        final LoadingDailog dialog=loadBuilder.create();
+        final LoadingDialog dialog=loadBuilder.create();
         dialog.show();
         final Timer t = new Timer();
         t.schedule(new TimerTask() {
@@ -166,7 +167,6 @@ public class chooseFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("TAG","service");
                         adapter.notifyDataSetChanged();
                         listView.setSelection(0);
                     }
