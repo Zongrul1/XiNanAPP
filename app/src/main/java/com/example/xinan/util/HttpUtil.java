@@ -36,7 +36,7 @@ public class HttpUtil {
     public static void postOkHttpRequest(String address,Content con, okhttp3.Callback callback) {
         RequestBody formBody = new FormBody.Builder()
                 .add("title", con.getTitle())
-                .add("price", "")
+                .add("price", String.valueOf(con.getPrice()))
                 .add("desc", con.getDescription())
                 .add("tag", con.getTag())
                 .add("pic", "")

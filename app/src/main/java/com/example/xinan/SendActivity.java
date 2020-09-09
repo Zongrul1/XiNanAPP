@@ -11,9 +11,12 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.android.tu.loadingdialog.LoadingDailog;
 import com.example.xinan.View.LoadingDialog;
@@ -35,6 +38,7 @@ public class SendActivity extends AppCompatActivity {
     private Button select;
     private Button back;
     private Button send;
+    private ToggleButton change;
     private TextView contactType;
     private TextView head;
     private EditText title;
@@ -42,27 +46,38 @@ public class SendActivity extends AppCompatActivity {
     private EditText name;
     private EditText contact;
     private EditText description;
+    private EditText price;
+    private LinearLayout priceWindow;
+    private int type;
     private int contactTypeNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contactTypeNumber = 0;
+        type = 1;
         Typeface typeface = ResourcesCompat.getFont(this,R.font.az);
         setContentView(R.layout.activity_send);
         head = findViewById(R.id.head);
         back = findViewById(R.id.back);
         select = findViewById(R.id.select);
         send = findViewById(R.id.send);
+        change = findViewById(R.id.change);
         contactType = findViewById(R.id.contactType);
         title = findViewById(R.id.title);
         tag = findViewById(R.id.tag);
         name = findViewById(R.id.name);
         contact = findViewById(R.id.contact);
+        price = findViewById(R.id.price);
         description = findViewById(R.id.description);
+        priceWindow = findViewById(R.id.priceWindow);
         //更改字体
+        priceWindow.setVisibility(View.GONE);
+        price.setText("0");
         back.setTypeface(typeface);
         head.setTypeface(typeface);
         send.setTypeface(typeface);
+        change.setTypeface(typeface);
+        select.setTypeface(typeface);
         select.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -93,44 +108,65 @@ public class SendActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Content con = new Content(String.valueOf(title.getText()),String.valueOf(tag.getText()),String.valueOf(name.getText()),contactTypeNumber,String.valueOf(contact.getText()),String.valueOf(description.getText()),1);
-                HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post",con,new Callback() {
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        final String responseText = response.body().string();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //loading
-                                LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(SendActivity.this)
-                                        .setMessage("加载中...")
-                                        .setCancelable(false)
-                                        .setCancelOutside(false);
-                                final LoadingDialog dialog=loadBuilder.create();
-                                dialog.show();
-                                final Timer t = new Timer();
-                                t.schedule(new TimerTask() {
-                                    public void run() {
-                                        dialog.dismiss();
-                                        t.cancel();
-                                        SendActivity.this.finish();
-                                    }
-                                }, 2000);
-                            }
-                        });
-                    }
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        e.printStackTrace();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //closeProgressDialog();
-                                Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
+                try {
+                    Content con = new Content(String.valueOf(title.getText()), String.valueOf(tag.getText()), String.valueOf(name.getText()), contactTypeNumber, String.valueOf(contact.getText()), String.valueOf(description.getText()), Integer.parseInt(String.valueOf(price.getText())), type);
+                    HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post", con, new Callback() {
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String responseText = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //loading
+                                    LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
+                                            .setMessage("加载中...")
+                                            .setCancelable(false)
+                                            .setCancelOutside(false);
+                                    final LoadingDialog dialog = loadBuilder.create();
+                                    dialog.show();
+                                    final Timer t = new Timer();
+                                    t.schedule(new TimerTask() {
+                                        public void run() {
+                                            dialog.dismiss();
+                                            t.cancel();
+                                            SendActivity.this.finish();
+                                        }
+                                    }, 2000);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //closeProgressDialog();
+                                    Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    });
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //closeProgressDialog();
+                            Toast.makeText(getApplicationContext(), "请输入正确的金额", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+        change.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(type == 2) {type = 1;priceWindow.setVisibility(View.GONE);head.setText("拾物登记"); price.setText("0");}
+                else if(type == 1) {type = 2;priceWindow.setVisibility(View.VISIBLE);head.setText("闲置发布");}
             }
         });
 

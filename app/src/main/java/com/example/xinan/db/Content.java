@@ -28,13 +28,14 @@ public class Content {
     private String Tips;
     private String NickColor;
 
-    public Content(String title,String tag,String name,int contactType,String contact,String description,int type){
+    public Content(String title,String tag,String name,int contactType,String contact,String description,int price,int type){
         Title = title;
         Tag = tag;
         Name = name;
         Contact = contact;
         ContactType = contactType;
         Description = description;
+        Price = price;
         Type = type;
     }
     public int getId() {

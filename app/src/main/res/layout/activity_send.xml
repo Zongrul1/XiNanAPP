@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/index"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +62,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <TextView
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -77,6 +78,15 @@
                 android:layout_height="match_parent"
                 android:text="工作人员">
             </EditText>
+            <ToggleButton
+                android:id="@+id/change"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:textOn="闲置物品"
+                android:textOff="失物招领"
+                android:background="@drawable/send">
+            </ToggleButton>
         </LinearLayout>
         </LinearLayout>
         <ScrollView
@@ -95,6 +105,31 @@
                 android:text="开发测试用途"
                 android:textSize="20dp"/>
         </ScrollView>
+        <LinearLayout
+            android:id="@+id/priceWindow"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/index"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="价钱"
+                android:textSize="20sp">
+            </TextView>
+            <EditText
+                android:id="@+id/price"
+                android:layout_marginLeft="10dp"
+                android:layout_width="100dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:textColor="@color/money"
+                android:textStyle= "bold"
+                android:text="200">
+            </EditText>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:background="@drawable/index"
@@ -120,7 +155,7 @@
         android:background="@drawable/index"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -137,7 +172,7 @@
             <EditText
                 android:id="@+id/name"
                 android:layout_toRightOf="@+id/name_text"
-                android:layout_width="240dp"
+                android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:textSize="20sp"
                 android:text="墨大研发中心">
@@ -145,20 +180,29 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="50dp">
             <TextView
                 android:id="@+id/contactType"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:textSize="20sp"
                 android:gravity="center"
                 android:text="手机">
             </TextView>
+            <EditText
+                android:id="@+id/contact"
+                android:layout_toRightOf="@+id/contactType"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:text="123456">
+            </EditText>
             <Button
                 android:id="@+id/select"
                 android:layout_marginTop="5dp"
-                android:layout_width="150dp"
+                android:layout_marginRight="5dp"
+                android:layout_width="130dp"
                 android:layout_height="30dp"
                 android:textSize="18sp"
                 android:text="其他联系方式"
@@ -167,33 +211,12 @@
                 android:layout_alignParentRight="true">
             </Button>
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-            <TextView
-                android:id="@+id/contact_text"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:text="号码">
-            </TextView>
-            <EditText
-                android:id="@+id/contact"
-                android:layout_toRightOf="@+id/contact_text"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-                android:textSize="20sp"
-                android:text="123456">
-            </EditText>
-        </RelativeLayout>
     </LinearLayout>
     <Button
         android:id="@+id/send"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="发布"
         android:textSize="26sp"
         android:textColor="#FFF"
