@@ -4,9 +4,9 @@
 
 ## V1.3
 ### 版本日志
-1.完成了对手机图片的读取（存在动态权限问题，需要在manifest注册然后再使用 ActivityCompat.requestPermissions 获取）。 
-2.完成了对图片发送前的压缩，以满足服务端的限制（使用bm.compress)。
-3.完成了图片的发布（流程为先将图片使用MultipartBody发送到服务器，然后获取返回的数据，再将数据加入json中发送请求）。
+1.完成了对手机图片的读取（存在动态权限问题，需要在manifest注册然后再使用 ActivityCompat.requestPermissions 获取）。   
+2.完成了对图片发送前的压缩，以满足服务端的限制（使用bm.compress)。  
+3.完成了图片的发布（流程为先将图片使用MultipartBody发送到服务器，然后获取返回的数据，再将数据加入json中发送请求）。  
 
 效果如图：  
 ![](gif/V1.3.gif)
