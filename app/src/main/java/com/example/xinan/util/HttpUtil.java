@@ -2,8 +2,11 @@ package com.example.xinan.util;
 
 import com.example.xinan.db.Content;
 
+import java.io.File;
+
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -39,7 +42,7 @@ public class HttpUtil {
                 .add("price", String.valueOf(con.getPrice()))
                 .add("desc", con.getDescription())
                 .add("tag", con.getTag())
-                .add("pic", "")
+                .add("pic", con.getPic())
                 .add("name", con.getName())
                 .add("contact_type", String.valueOf(con.getContactType()))
                 .add("contact", con.getContact())
@@ -47,6 +50,18 @@ public class HttpUtil {
                 .build();//临时措施
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).post(formBody).addHeader("Cookie",cookie).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //for send Image
+    public static void postImageOkHttpRequest(String address,File file, okhttp3.Callback callback) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+        MultipartBody multipartBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("pic", file.getName(), requestBody)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(address).post(multipartBody).addHeader("Cookie",cookie).build();
         client.newCall(request).enqueue(callback);
     }
 }

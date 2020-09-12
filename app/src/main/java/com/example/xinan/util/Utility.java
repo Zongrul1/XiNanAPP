@@ -15,6 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
+    public static String handlePicResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            return jsonObject.get("Data").toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static void handleNewsResponse(List<News> news, String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);

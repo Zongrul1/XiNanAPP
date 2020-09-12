@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchActivity"
-    android:orientation="vertical">
+    android:orientation="vertical">\
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -131,26 +138,39 @@
             </EditText>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:background="@drawable/index"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/pic_text"
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textSize="20sp"
-            android:text="图片上传（尚未支持）"></TextView>
-        <ImageView
+            android:text="图片上传"></TextView>
+        <Button
+            android:id="@+id/pic_button"
             android:layout_marginLeft="10dp"
             android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_height="30dp"
+            android:background="@drawable/send"
+            android:text="选择图片"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"></Button>
+        <ImageView
+            android:id="@+id/pic"
+            android:layout_marginLeft="10dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_marginBottom="10dp"
+            android:layout_below="@+id/pic_text"
+            android:scaleType="fitXY"
             android:src="@drawable/avater">
         </ImageView>
-    </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:background="@drawable/index"
         android:layout_marginTop="10dp"
@@ -216,14 +236,15 @@
         android:id="@+id/send"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
         android:text="发布"
         android:textSize="26sp"
         android:textColor="#FFF"
         android:background="@drawable/send"
         android:gravity="center"
         android:layout_gravity="center"></Button>
-
-
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
