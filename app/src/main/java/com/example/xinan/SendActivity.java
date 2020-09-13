@@ -1,14 +1,6 @@
 package com.example.xinan;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,9 +11,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileUtils;
-import android.os.Message;
-import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -35,28 +24,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.android.tu.loadingdialog.LoadingDailog;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.db.Content;
-import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.PictureUtil;
-import com.example.xinan.util.Utility;
+import com.example.xinan.util.RetrofitUtil;
 
 import java.io.File;
-import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class SendActivity extends AppCompatActivity {
     private Button select;
@@ -140,113 +129,161 @@ public class SendActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
+                    Content con = new Content(String.valueOf(title.getText()), String.valueOf(tag.getText()), String.valueOf(name.getText()), contactTypeNumber, String.valueOf(contact.getText()), String.valueOf(description.getText()), "",Integer.parseInt(String.valueOf(price.getText())), type);
                     if(picturePath != null) {
-                       Log.d("TAG", picturePath);
-                        File mFile = new File(picturePath);
                         //压缩图片
                         String targetPath = "/storage/emulated/0/DCIM/Camera/compressPic.jpg";
                         final String compressImage = PictureUtil.compressImage(picturePath, targetPath, 25);
                         final File compressedPic = new File(compressImage);
-                        HttpUtil.postImageOkHttpRequest("https://xnxz.top/wc/upload", compressedPic, new Callback() {
+//                        HttpUtil.postImageOkHttpRequest("https://xnxz.top/wc/upload", compressedPic, new Callback() {
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//                                final String responseText = response.body().string();
+//                                picturePath = Utility.handlePicResponse(responseText);
+//                                Log.d("TAG", picturePath);
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //loading
+//                                        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
+//                                                .setMessage("发送中...")
+//                                                .setCancelable(false)
+//                                                .setCancelOutside(false);
+//                                        final LoadingDialog dialog = loadBuilder.create();
+//                                        dialog.show();
+//                                        final Timer t = new Timer();
+//                                        t.schedule(new TimerTask() {
+//                                            public void run() {
+//                                                dialog.dismiss();
+//                                                t.cancel();
+//                                                SendActivity.this.finish();
+//                                            }
+//                                        }, 3000);
+//                                    }
+//                                });
+//                                Content con = new Content(String.valueOf(title.getText()), String.valueOf(tag.getText()), String.valueOf(name.getText()), contactTypeNumber, String.valueOf(contact.getText()), String.valueOf(description.getText()), picturePath,Integer.parseInt(String.valueOf(price.getText())), type);
+//                                HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post", con, new Callback() {
+//                                    @Override
+//                                    public void onResponse(Call call, Response response) throws IOException {
+//                                        final String responseText = response.body().string();
+//                                        Log.d("TAG", responseText);
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Call call, IOException e) {
+//                                        e.printStackTrace();
+//                                        runOnUiThread(new Runnable() {
+//                                            @Override
+//                                            public void run() {
+//                                                //closeProgressDialog();
+//                                                Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
+//                                    }
+//                                });
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//                                e.printStackTrace();
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //closeProgressDialog();
+//                                        Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
+//                        });
+                        RetrofitUtil.sendWithPIC(compressedPic,con, new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                final String responseText = response.body().string();
-                                picturePath = Utility.handlePicResponse(responseText);
-                                Log.d("TAG", picturePath);
-                                runOnUiThread(new Runnable() {
-                                    @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                //loading
+                                LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
+                                        .setMessage("发送中...")
+                                        .setCancelable(false)
+                                        .setCancelOutside(false);
+                                final LoadingDialog dialog = loadBuilder.create();
+                                dialog.show();
+                                final Timer t = new Timer();
+                                t.schedule(new TimerTask() {
                                     public void run() {
-                                        //loading
-                                        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
-                                                .setMessage("发送中...")
-                                                .setCancelable(false)
-                                                .setCancelOutside(false);
-                                        final LoadingDialog dialog = loadBuilder.create();
-                                        dialog.show();
-                                        final Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            public void run() {
-                                                dialog.dismiss();
-                                                t.cancel();
-                                                SendActivity.this.finish();
-                                            }
-                                        }, 3000);
+                                        dialog.dismiss();
+                                        t.cancel();
+                                        SendActivity.this.finish();
                                     }
-                                });
-                                Content con = new Content(String.valueOf(title.getText()), String.valueOf(tag.getText()), String.valueOf(name.getText()), contactTypeNumber, String.valueOf(contact.getText()), String.valueOf(description.getText()), picturePath,Integer.parseInt(String.valueOf(price.getText())), type);
-                                HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post", con, new Callback() {
-                                    @Override
-                                    public void onResponse(Call call, Response response) throws IOException {
-                                        final String responseText = response.body().string();
-                                        Log.d("TAG", responseText);
-                                    }
-                                    @Override
-                                    public void onFailure(Call call, IOException e) {
-                                        e.printStackTrace();
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                //closeProgressDialog();
-                                                Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                });
+                                }, 2000);
                             }
 
                             @Override
-                            public void onFailure(Call call, IOException e) {
-                                e.printStackTrace();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //closeProgressDialog();
-                                        Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            public void onFailure(Call call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                     else {
-                        Content con = new Content(String.valueOf(title.getText()), String.valueOf(tag.getText()), String.valueOf(name.getText()), contactTypeNumber, String.valueOf(contact.getText()), String.valueOf(description.getText()), "",Integer.parseInt(String.valueOf(price.getText())), type);
-                        HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post", con, new Callback() {
+//                        HttpUtil.postOkHttpRequest("https://xnxz.top/wc/post", con, new Callback() {
+//                            @Override
+//                            public void onResponse(Call call, Response response) throws IOException {
+//                                final String responseText = response.body().string();
+//                                Log.d("TAG", responseText);
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //loading
+//                                        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
+//                                                .setMessage("发送中...")
+//                                                .setCancelable(false)
+//                                                .setCancelOutside(false);
+//                                        final LoadingDialog dialog = loadBuilder.create();
+//                                        dialog.show();
+//                                        final Timer t = new Timer();
+//                                        t.schedule(new TimerTask() {
+//                                            public void run() {
+//                                                dialog.dismiss();
+//                                                t.cancel();
+//                                                SendActivity.this.finish();
+//                                            }
+//                                        }, 2000);
+//                                        picturePath = "";
+//                                    }
+//                                });
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call call, IOException e) {
+//                                e.printStackTrace();
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        //closeProgressDialog();
+//                                        Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+//                            }
+//                        });
+                        RetrofitUtil.sendWithoutPIC(con, new Callback<ResponseBody>() {
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                final String responseText = response.body().string();
-                                Log.d("TAG", responseText);
-                                runOnUiThread(new Runnable() {
-                                    @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                //loading
+                                LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
+                                        .setMessage("发送中...")
+                                        .setCancelable(false)
+                                        .setCancelOutside(false);
+                                final LoadingDialog dialog = loadBuilder.create();
+                                dialog.show();
+                                final Timer t = new Timer();
+                                t.schedule(new TimerTask() {
                                     public void run() {
-                                        //loading
-                                        LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(SendActivity.this)
-                                                .setMessage("发送中...")
-                                                .setCancelable(false)
-                                                .setCancelOutside(false);
-                                        final LoadingDialog dialog = loadBuilder.create();
-                                        dialog.show();
-                                        final Timer t = new Timer();
-                                        t.schedule(new TimerTask() {
-                                            public void run() {
-                                                dialog.dismiss();
-                                                t.cancel();
-                                                SendActivity.this.finish();
-                                            }
-                                        }, 2000);
-                                        picturePath = "";
+                                        dialog.dismiss();
+                                        t.cancel();
+                                        SendActivity.this.finish();
                                     }
-                                });
+                                }, 2000);
                             }
 
                             @Override
-                            public void onFailure(Call call, IOException e) {
-                                e.printStackTrace();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        //closeProgressDialog();
-                                        Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            public void onFailure(Call call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), "发送失败", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

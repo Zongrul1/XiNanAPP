@@ -11,6 +11,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+/*
+*已改用retrofit
+*/
+
 public class HttpUtil {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static String cookie;

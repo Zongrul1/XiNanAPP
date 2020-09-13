@@ -2,13 +2,9 @@ package com.example.xinan;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +14,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.android.tu.loadingdialog.LoadingDailog;
 import com.example.xinan.Adapter.NewsAdapter;
-import com.example.xinan.Service.UpdateService;
 import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.db.News;
 import com.example.xinan.util.HttpUtil;
+import com.example.xinan.util.RetrofitUtil;
 import com.example.xinan.util.Utility;
+import com.example.xinan.util.XinanApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +28,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Headers;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
+import retrofit2.Callback;
+
 
 public class chooseFragment extends Fragment {
     private MainActivity MainActivity;
@@ -126,30 +121,50 @@ public class chooseFragment extends Fragment {
         });
     }
     public void requestCookie(){
-        HttpUtil.postOkHttpRequest("https://xnxz.top/wc/login",new Callback() {
+//        HttpUtil.postOkHttpRequest("https://xnxz.top/wc/login",new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                final ResponseBody responseText = response.body();
+//                final Headers header = response.headers();
+//                HttpUtil.setToken(header.get("Set-Cookie"));
+//                Message msg = Message.obtain();
+//                msg.what = GET_DATA_SUCCESS;
+//                handler.sendMessage(msg);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //Toast.makeText(getApplicationContext(), responseText, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //closeProgressDialog();
+//                        Toast.makeText(getContext(), "cookie加载失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
+        RetrofitUtil.requestIndex("login", new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final ResponseBody responseText = response.body();
+            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
                 final Headers header = response.headers();
-                HttpUtil.setToken(header.get("Set-Cookie"));
+                XinanApplication.setCookie(header.get("Set-Cookie"));
                 Message msg = Message.obtain();
                 msg.what = GET_DATA_SUCCESS;
                 handler.sendMessage(msg);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Toast.makeText(getApplicationContext(), responseText, Toast.LENGTH_SHORT).show();
-                    }
-                });
             }
+
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            public void onFailure(retrofit2.Call call, Throwable t) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //closeProgressDialog();
-                        Toast.makeText(getContext(), "cookie加载失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "cookie获取失败", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -157,24 +172,53 @@ public class chooseFragment extends Fragment {
     }
 
     public void requestIndex() {
-        String Url = "https://xnxz.top/wc/switch";
-        HttpUtil.sendOkHttpRequest(Url, new Callback() {
+//        String Url = "https://xnxz.top/wc/switch";
+//        HttpUtil.sendOkHttpRequest(Url, new Callback() {
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                final String responseText = response.body().string();
+//                news.clear();
+//                Utility.handleNewsResponse(news,responseText);
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        adapter.notifyDataSetChanged();
+//                        listView.setSelection(0);
+//                    }
+//                });
+//            }
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                e.printStackTrace();
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getContext(), "index加载失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//        });
+        RetrofitUtil.requestIndex("switch", new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-                news.clear();
-                Utility.handleNewsResponse(news,responseText);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.notifyDataSetChanged();
-                        listView.setSelection(0);
-                    }
-                });
+            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+                    final String responseText = response.body().string();
+                    news.clear();
+                    Utility.handleNewsResponse(news,responseText);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                            listView.setSelection(0);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
             @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            public void onFailure(retrofit2.Call call, Throwable t) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -183,6 +227,7 @@ public class chooseFragment extends Fragment {
                 });
             }
         });
+
     }
 
 }

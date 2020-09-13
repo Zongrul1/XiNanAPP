@@ -2,13 +2,25 @@
 ![](mini.png)
 
 
+## V1.4
+### 版本日志
+1.将网络连接架构从okhttp3升级到retrofit2（未完全运用到json解析，因为bean与json没做到11对应）。  
+2.将URLImageView里的HttpConnection升级到了retrofit2（使用byteStream()获取）。
+
+参考：[https://my.oschina.net/tingzi/blog/3002269](https://my.oschina.net/tingzi/blog/3002269)
+
+### 展望
+1.点赞  
+2.rxjava
+
+
 ## V1.3
 ### 版本日志
 1.完成了对手机图片的读取（存在动态权限问题，需要在manifest注册然后再使用 ActivityCompat.requestPermissions 获取）。   
 2.完成了对图片发送前的压缩，以满足服务端的限制（使用bm.compress)。  
 3.完成了图片的发布（流程为先将图片使用MultipartBody发送到服务器，然后获取返回的数据，再将数据加入json中发送请求）。  
 
-效果如图：  
+### 实际演示 
 ![](gif/V1.3.gif)
 
 ## V1.2
@@ -16,7 +28,7 @@
 1.完成发送界面的切换功能，现在发送界面可以切换到闲置物品页面。  
 2.完成了对不正确金额输入的判定。
 
-效果如图：  
+### 实际演示   
 ![](gif/V1.2.gif)
 
 ## V1.1
@@ -24,7 +36,7 @@
 1.完成搜索界面的切换功能，现在搜索界面可以切换到闲置物品页面。  
 2.修复圆形头像绘制功能的bug，Xfermode绘制在返回fragment时会导致画面消失，原因在于saveLayer方法，改用BitmapShader实现避免了问题。
 
-效果如图：  
+### 实际演示   
 ![](gif/V1.1.gif)
 
 ## V1.0
@@ -42,11 +54,11 @@
 4.实现了下拉刷新（SwipeRefreshLayout）  
 **搜索页**  
 1.更改ListView间隔   
-2.使用圆框头像（参考自//https://www.jianshu.com/p/a5be5d3a0a05）  
+2.使用圆框头像（参考自[https://www.jianshu.com/p/a5be5d3a0a05](https://www.jianshu.com/p/a5be5d3a0a05)）  
 3.实现了下拉刷新（SwipeRefreshLayout）  
 **内容页**  
 1.更改基本样式   
-2.使用圆框头像（参考自//https://www.jianshu.com/p/a5be5d3a0a05）   
+2.使用圆框头像（参考自[https://www.jianshu.com/p/a5be5d3a0a05](https://www.jianshu.com/p/a5be5d3a0a05)）   
 **发布页**  
 1.更改了样式  
 
@@ -56,10 +68,10 @@
 2.闲置物品  
 3.点赞显示  
 
-发布效果如图：  
+### 发布功能演示  
 ![](gif/V1.0A.gif)
 
-主页ViewPager自动刷新效果如图：  
+### 主页ViewPager自动刷新演示   
 ![](gif/V1.0B.gif)
 
 
@@ -72,7 +84,7 @@
 2.发布功能已完成对象的包装，将进行网络通信的调试。
 
 
-效果如图：  
+### 实际演示  
 ![](gif/V0.9.gif)
 
 ## V0.85
@@ -80,7 +92,7 @@
 1.改善了一下发布页面。  
 2.完成了将输入内容转成json的操作（通过Gson的tojson）.
 
-效果如图：  
+### 实际演示    
 ![](gif/V0.85.gif)
 
 ## V0.8
@@ -91,7 +103,7 @@
 ### 存在问题 
 1.token时限和鉴权问题，后端小伙伴说没时间做，只能暂时使用临时token. 
 
-效果如图：  
+### 实际演示   
 ![](gif/V0.8.gif)
 
 ## V0.7
@@ -104,7 +116,7 @@
 1.缓存和实时请求问题，请求速度有点慢，可进行缓存会失去实时性  
 2.token时限和鉴权问题  
  
-效果如图：    
+### 实际演示     
 ![](gif/V0.7.gif)
 
 ## V0.6
@@ -113,7 +125,7 @@
 2.加入sharedpreference作为缓存，减少请求次数  
 3.参考网上代码,编写了MyImageView,可以通过url链接来异步加载图片（使用hanlder回传主线程），但后续还需要对图片进行压缩或者缓存处理。（[参考地址](https://blog.csdn.net/qq_33200967/article/details/77263062)）  
 
-效果如图：  
+### 实际演示   
 ![](gif/V0.6.gif)
 
 ## V0.5
@@ -122,5 +134,5 @@
 2.使用okhttp和gson抓取了首页的数据，并完成显示  
 3.使用viewpager制作了首页的滑动图片效果  
 
-效果如图：  
+### 实际演示   
 ![](gif/V0.5.gif)
