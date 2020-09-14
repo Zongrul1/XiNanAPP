@@ -38,15 +38,15 @@ public class searchFragment extends Fragment {
     private ContentAdapter adapter;
     private SearchActivity searchActivity;
     List<Content> cons = new ArrayList<>();
-    private Handler handler = new Handler(){
+    private final Handler handler = new Handler(new Handler.Callback(){
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             Bundle bundle = msg.getData();
             requestSearch(bundle.getString("search"),bundle.getString("type"));
+            return false;
             //在这里实现ui更新的效果
         }
-    };
+    });
 
 
     @Override

@@ -39,6 +39,7 @@ public class RetrofitUtil {
                 break;
             case "switch":
                 retrofitService.getNews().enqueue(callback);
+                break;
         }
     }
 

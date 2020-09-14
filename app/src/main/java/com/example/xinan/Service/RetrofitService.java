@@ -1,6 +1,7 @@
 package com.example.xinan.Service;
 
 import java.io.InputStream;
+import rx.Observable;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -9,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface RetrofitService {
+    //retrofit原生
     @POST("login")
     Call<ResponseBody> getCookie(@Body RequestBody body);
 
@@ -30,4 +32,10 @@ public interface RetrofitService {
     @GET
     Call<ResponseBody> getPIC(@Url String url);
 
+    //rx
+    @POST("login")
+    Observable<retrofit2.Response<ResponseBody>> getRxCookie(@Body RequestBody body);
+
+    @GET("switch")
+    Observable<retrofit2.Response<ResponseBody>> getRxNews();
 }

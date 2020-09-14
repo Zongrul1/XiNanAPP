@@ -79,18 +79,18 @@ public class LoadingDialog extends Dialog{
 
         public LoadingDialog create(){
             LayoutInflater inflater = LayoutInflater.from(context);
-            View view=inflater.inflate(R.layout.dialog_loading,null);
-            final LoadingDialog loadingDailog=new LoadingDialog(context,R.style.MyDialogStyle);
+            View view=inflater.inflate(R.layout.loading_dialog,null);
+            final LoadingDialog loadingDialog=new LoadingDialog(context,R.style.MyDialogStyle);
             TextView msgText= (TextView) view.findViewById(R.id.tipTextView);
             if(isShowMessage){
                 msgText.setText(message);
             }else{
                 msgText.setVisibility(View.GONE);
             }
-            loadingDailog.setContentView(view);
-            loadingDailog.setCancelable(isCancelable);
-            loadingDailog.setCanceledOnTouchOutside(isCancelOutside);
-            return  loadingDailog;
+            loadingDialog.setContentView(view);
+            loadingDialog.setCancelable(isCancelable);
+            loadingDialog.setCanceledOnTouchOutside(isCancelOutside);
+            return  loadingDialog;
 
         }
 

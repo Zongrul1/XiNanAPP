@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.xinan.Adapter.NewsAdapter;
+import com.example.xinan.Subscriber.ProgressSubscriber;
+import com.example.xinan.Subscriber.RxSubscriber;
 import com.example.xinan.View.LoadingDialog;
 import com.example.xinan.db.News;
 import com.example.xinan.util.HttpUtil;
 import com.example.xinan.util.RetrofitUtil;
+import com.example.xinan.util.RxRetrofitUtil;
 import com.example.xinan.util.Utility;
 import com.example.xinan.util.XinanApplication;
 
@@ -31,6 +36,7 @@ import java.util.TimerTask;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class chooseFragment extends Fragment {
@@ -42,12 +48,15 @@ public class chooseFragment extends Fragment {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
-    private Handler handler = new Handler() {
+    //rx
+    private RxSubscriber getIndexNext;
+    private final Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case GET_DATA_SUCCESS:
-                    requestIndex();
+                    //requestIndex();
+                    requestRxIndex();
                     break;
                 case NETWORK_ERROR:
                     Toast.makeText(getContext(),"网络连接失败",Toast.LENGTH_SHORT).show();
@@ -56,8 +65,9 @@ public class chooseFragment extends Fragment {
                     Toast.makeText(getContext(),"服务器发生错误",Toast.LENGTH_SHORT).show();
                     break;
             }
+            return false;
         }
-    };
+    });
     public Handler getHandler(){
         return handler;
     }
@@ -67,7 +77,8 @@ public class chooseFragment extends Fragment {
 
         if (!isFirstLoading) {
             //如果不是第一次加载，刷新数据
-            requestIndex();
+            //requestIndex();
+            requestRxIndex();
         }
 
         isFirstLoading = false;
@@ -95,19 +106,19 @@ public class chooseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if(HttpUtil.getToken() == null) requestCookie();
         //loading
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(getContext())
-                .setMessage("加载中...")
-                .setCancelable(false)
-                .setCancelOutside(false);
-        final LoadingDialog dialog=loadBuilder.create();
-        dialog.show();
-        final Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                dialog.dismiss();
-                t.cancel();
-            }
-        }, 6000);
+//        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(getContext())
+//                .setMessage("加载中...")
+//                .setCancelable(false)
+//                .setCancelOutside(false);
+//        final LoadingDialog dialog=loadBuilder.create();
+//        dialog.show();
+//        final Timer t = new Timer();
+//        t.schedule(new TimerTask() {
+//            public void run() {
+//                dialog.dismiss();
+//                t.cancel();
+//            }
+//        }, 6000);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -119,6 +130,22 @@ public class chooseFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        //RxSubscriber
+        getIndexNext = new RxSubscriber<retrofit2.Response<ResponseBody>>() {
+            @Override
+            public void onNext(retrofit2.Response<ResponseBody> response) throws IOException {
+                final String responseText = response.body().string();
+                news.clear();
+                Utility.handleNewsResponse(news,responseText);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                        listView.setSelection(0);
+                    }
+                });
+            }
+        };
     }
     public void requestCookie(){
 //        HttpUtil.postOkHttpRequest("https://xnxz.top/wc/login",new Callback() {
@@ -227,7 +254,10 @@ public class chooseFragment extends Fragment {
                 });
             }
         });
+    }
 
+    public void requestRxIndex(){
+        RxRetrofitUtil.getInstance().requestIndex(new ProgressSubscriber<Response<ResponseBody>>(getIndexNext,getActivity()),"switch");
     }
 
 }

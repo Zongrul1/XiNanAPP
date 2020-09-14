@@ -35,7 +35,7 @@ public class ShowActivity extends AppCompatActivity {
     private TextView price;
     private TextView fulltext;
     private URLImageView pic;
-    private String name;
+    private String id;
     private Content con;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ShowActivity extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
         Typeface typeface = ResourcesCompat.getFont(this,R.font.az);
-        name = bundle.getString("id");
+        id = bundle.getString("id");
         setContentView(R.layout.activity_show);
         back = findViewById(R.id.back);
         head = findViewById(R.id.head);
@@ -103,7 +103,7 @@ public class ShowActivity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "加载失败", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        RetrofitUtil.requestDetail(name, new Callback<ResponseBody>() {
+        RetrofitUtil.requestDetail(id, new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
