@@ -46,6 +46,8 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
+            android:lines="1"
+            android:inputType="text"
             android:drawableTop="@drawable/lens">
         </EditText>
         <Button

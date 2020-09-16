@@ -4,6 +4,6 @@ import java.io.IOException;
 
 import rx.Subscriber;
 
-public interface RxSubscriber<T>  {
+public interface HelperSubscriber<T>  {
     void onNext(T t) throws IOException;
 }

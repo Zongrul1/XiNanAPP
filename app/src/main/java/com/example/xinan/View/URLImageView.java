@@ -6,43 +6,43 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.xinan.util.RetrofitUtil;
+import com.example.xinan.Subscriber.HelperSubscriber;
+import com.example.xinan.Subscriber.MainSubscriber;
+import com.example.xinan.util.RxRetrofitUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class URLImageView extends androidx.appcompat.widget.AppCompatImageView {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
+    private HelperSubscriber getPIC;
     //子线程不能操作UI，通过Handler设置图片
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
                 case GET_DATA_SUCCESS:
                     Bitmap bitmap = (Bitmap) msg.obj;
                     setImageBitmap(bitmap);
                     break;
                 case NETWORK_ERROR:
-                    Toast.makeText(getContext(),"网络连接失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
                     break;
                 case SERVER_ERROR:
-                    Toast.makeText(getContext(),"没有图片",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "没有图片", Toast.LENGTH_SHORT).show();
                     break;
             }
+            return false;
         }
-    };
+     });
+
 
     public URLImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -62,6 +62,28 @@ public class URLImageView extends androidx.appcompat.widget.AppCompatImageView {
         new Thread() {
             @Override
             public void run() {
+                //同一线程中
+                getPIC = new HelperSubscriber<Response<ResponseBody>>() {
+                    @Override
+                    public void onNext(Response<ResponseBody> response) throws IOException {
+                        InputStream inputStream = response.body().byteStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        //利用Message把图片发给Handler
+                        Message msg = Message.obtain();
+                        msg.obj = bitmap;
+                        msg.what = GET_DATA_SUCCESS;
+                        handler.sendMessage(msg);
+                        inputStream.close();
+                    }
+                };
+                RxRetrofitUtil.getInstance().requestPIC(new MainSubscriber<Response<ResponseBody>>(getPIC,getContext(),false),path);
+            }
+        }.start();
+    }
+}
+/*
+老版获取方式
+ */
                 //                    //把传过来的路径转成URL
 //                    URL url = new URL(path);
 //                    //获取连接
@@ -86,30 +108,26 @@ public class URLImageView extends androidx.appcompat.widget.AppCompatImageView {
 //                        //服务启发生错误
 //                        handler.sendEmptyMessage(SERVER_ERROR);
 //                    }
-                RetrofitUtil.requestPIC(path, new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            InputStream inputStream = response.body().byteStream();
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                            //利用Message把图片发给Handler
-                            Message msg = Message.obtain();
-                            msg.obj = bitmap;
-                            msg.what = GET_DATA_SUCCESS;
-                            handler.sendMessage(msg);
-                            inputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+//                RetrofitUtil.requestPIC(path, new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        try {
+//                            InputStream inputStream = response.body().byteStream();
+//                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//                            //利用Message把图片发给Handler
+//                            Message msg = Message.obtain();
+//                            msg.obj = bitmap;
+//                            msg.what = GET_DATA_SUCCESS;
+//                            handler.sendMessage(msg);
+//                            inputStream.close();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call call, Throwable t) {
+//                        handler.sendEmptyMessage(SERVER_ERROR);
+//                    }
+//                });
 
-                    @Override
-                    public void onFailure(Call call, Throwable t) {
-                        handler.sendEmptyMessage(SERVER_ERROR);
-                    }
-                });
-            }
-        }.start();
-    }
-
-}

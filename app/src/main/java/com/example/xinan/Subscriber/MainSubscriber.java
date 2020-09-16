@@ -17,17 +17,19 @@ import rx.Subscriber;
  * 调用者自己对请求数据进行处理
  * Created by liukun on 16/3/10.
  */
-public class ProgressSubscriber<T> extends Subscriber<T> {
+public class MainSubscriber<T> extends Subscriber<T> {
 
-    private RxSubscriber mSubscriberOnNextListener;
+    private HelperSubscriber mSubscriberOnNextListener;
     private LoadingDialog dialog;
+    private boolean flag;//是否显示dialog
     //private ProgressDialogHandler mProgressDialogHandler;
 
     private Context context;
 
-    public ProgressSubscriber(RxSubscriber mSubscriberOnNextListener, Context context) {
+    public MainSubscriber(HelperSubscriber mSubscriberOnNextListener, Context context,boolean flag) {
         this.mSubscriberOnNextListener = mSubscriberOnNextListener;
         this.context = context;
+        this.flag = flag;
     }
 
     /**
@@ -36,12 +38,14 @@ public class ProgressSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public void onStart() {
-        LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(context)
-                .setMessage("使用Rxjava + Retrofit \n 加载中...")
-                .setCancelable(false)
-                .setCancelOutside(false);
-        dialog=loadBuilder.create();
-        dialog.show();
+        if(flag) {
+            LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(context)
+                    .setMessage("加载中...")
+                    .setCancelable(false)
+                    .setCancelOutside(false);
+            dialog = loadBuilder.create();
+            dialog.show();
+        }
     }
 
     /**
@@ -49,8 +53,8 @@ public class ProgressSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public void onCompleted() {
-        dialog.dismiss();
-        Toast.makeText(context, "这次请求使用了Rxjava", Toast.LENGTH_SHORT).show();
+        if(flag) dialog.dismiss();
+        //Toast.makeText(context, "这次请求使用了Rxjava", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -67,6 +71,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> {
         } else {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        if(flag) dialog.dismiss();
     }
 
     /**

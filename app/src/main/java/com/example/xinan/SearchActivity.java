@@ -101,20 +101,6 @@ public class SearchActivity extends AppCompatActivity {
                 bundle.putString("type",String.valueOf(type));
                 message.setData(bundle);
                 handler.sendMessage(message);
-                //loading
-                LoadingDialog.Builder loadBuilder=new LoadingDialog.Builder(SearchActivity.this)
-                        .setMessage("加载中...")
-                        .setCancelable(false)
-                        .setCancelOutside(false);
-                final LoadingDialog dialog=loadBuilder.create();
-                dialog.show();
-                final Timer t = new Timer();
-                t.schedule(new TimerTask() {
-                    public void run() {
-                        dialog.dismiss();
-                        t.cancel();
-                    }
-                }, 2000);
             }
         });
     }
