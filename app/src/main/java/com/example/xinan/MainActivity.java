@@ -33,26 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView recommend;
     private Handler handler;
     private SwipeRefreshLayout swipe;
-//service测试
-//    private UpdateService updateBinder;
-//
-//    private ServiceConnection connection = new ServiceConnection() {
-//        //可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
-//        @Override
-//        public void onServiceDisconnected(ComponentName name) {
-//        }
-//
-//        @Override
-//        public void onServiceConnected(ComponentName name, IBinder service) {
-//            updateBinder = (UpdateService) service;
-//            updateBinder.updateMain();
-////            chooseFragment fragment = (chooseFragment) getFragmentManager().findFragmentById(R.id.choose_area_fragment);
-////            fragment.requestIndex();
-//            FragmentManager manager = getSupportFragmentManager();
-//            chooseFragment fragment = (chooseFragment)manager.findFragmentById(R.id.choose_area_fragment);
-//            fragment.requestIndex();
-//        }//onServiceConnected()方法关键，在这里实现对服务的方法的调用
-//    };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -149,3 +129,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+//service测试
+//    private UpdateService updateBinder;
+//
+//    private ServiceConnection connection = new ServiceConnection() {
+//        //可交互的后台服务与普通服务的不同之处，就在于这个connection建立起了两者的联系
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//        }
+//
+//        @Override
+//        public void onServiceConnected(ComponentName name, IBinder service) {
+//            updateBinder = (UpdateService) service;
+//            updateBinder.updateMain();
+////            chooseFragment fragment = (chooseFragment) getFragmentManager().findFragmentById(R.id.choose_area_fragment);
+////            fragment.requestIndex();
+//            FragmentManager manager = getSupportFragmentManager();
+//            chooseFragment fragment = (chooseFragment)manager.findFragmentById(R.id.choose_area_fragment);
+//            fragment.requestIndex();
+//        }//onServiceConnected()方法关键，在这里实现对服务的方法的调用
+//    };

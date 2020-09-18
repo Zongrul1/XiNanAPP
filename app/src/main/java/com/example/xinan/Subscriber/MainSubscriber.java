@@ -1,5 +1,6 @@
 package com.example.xinan.Subscriber;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -72,6 +73,7 @@ public class MainSubscriber<T> extends Subscriber<T> {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         if(flag) dialog.dismiss();
+        ((Activity)context).finish();
     }
 
     /**
