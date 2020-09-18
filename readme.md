@@ -68,7 +68,7 @@
 2.移除了sharedprefercence机制     
 3.优化cookie获取    
 **主页**
-1.viewpager开辟了一条线程用于定时刷新banner   
+1.viewpager中使用runnable + handler用于定时刷新banner   
 2.更改了主页ListView的样式   
 3.重写onresume实现刷新  
 4.实现了下拉刷新（SwipeRefreshLayout）  
