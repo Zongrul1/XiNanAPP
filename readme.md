@@ -3,7 +3,7 @@
 
 ## V1.51
 ### 版本日志
-1.修复一个小bug，发布界面的输入框用background="@null"替代minlines。
+1.修复一个小bug，发布界面的输入框用background="@null"替代minlines。  
 2.对网络错误的处理进行了微调。
 
 ## V1.5
