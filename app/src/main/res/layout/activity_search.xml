@@ -16,18 +16,15 @@
             android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/search">
         <Button
             android:id="@+id/back"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="返回"
-            android:textColor="#FFF"
-            android:textSize="20sp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="#00000000"
-            android:layout_marginStart="15dp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_back" />
         <TextView
             android:id="@+id/head"
             android:layout_width="160dp"
@@ -56,7 +53,9 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="找一找"
+            android:textColor="#FFF"
             android:background="@drawable/search"
+            android:textSize="18sp"
             android:layout_alignParentRight="true"></Button>
     </RelativeLayout>
             <RelativeLayout
@@ -78,6 +77,8 @@
                     android:layout_alignParentRight="true"
                     android:textOn="闲置物品"
                     android:textOff="失物招领"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
                     android:background="@drawable/search">
                 </ToggleButton>
             </RelativeLayout>

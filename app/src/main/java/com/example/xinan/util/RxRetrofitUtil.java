@@ -111,7 +111,7 @@ public class RxRetrofitUtil {
                 .addConverterFactory(GsonConverterFactory.create())//设置 Json 转换器
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        rxService = retrofit.create(RxService.class);
+        RxService rxService = retrofit.create(RxService.class); //不能使用全局，会影响url
         Observable<retrofit2.Response<ResponseBody>> observable = rxService.getPIC(url);
         if(observable != null) toSubscribe(observable,subscriber);
     }

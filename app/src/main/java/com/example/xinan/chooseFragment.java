@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.xinan.Adapter.NewsAdapter;
 import com.example.xinan.Subscriber.HelperSubscriber;
@@ -35,7 +37,7 @@ import retrofit2.Response;
 
 public class chooseFragment extends Fragment {
     private MainActivity MainActivity;
-    private ListView listView;
+    private RecyclerView listView;
     private NewsAdapter adapter;
     List<News> news = new ArrayList<>();
     private boolean isFirstLoading = true;
@@ -89,7 +91,8 @@ public class chooseFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.choose_area, container, false);
         listView = view.findViewById(R.id.list_view);
-        adapter = new NewsAdapter(getContext(), R.layout.index_list, news);
+        adapter = new NewsAdapter(R.layout.index_list, news);
+        listView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         listView.setAdapter(adapter);
         return view;
     }
@@ -97,17 +100,17 @@ public class chooseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                News m = news.get(position);
-                Intent intent = new Intent(getActivity(), ShowActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("id", String.valueOf(m.getId()));
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                News m = news.get(position);
+//                Intent intent = new Intent(getActivity(), ShowActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("id", String.valueOf(m.getId()));
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
         //RxSubscriber
         getCookie = new HelperSubscriber<Response<ResponseBody>>() {
             @Override
@@ -129,7 +132,7 @@ public class chooseFragment extends Fragment {
                     @Override
                     public void run() {
                         adapter.notifyDataSetChanged();
-                        listView.setSelection(0);
+                        //listView.setSelection(0);
                     }
                 });
             }

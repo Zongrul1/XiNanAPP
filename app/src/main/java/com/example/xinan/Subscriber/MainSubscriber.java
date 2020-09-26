@@ -71,6 +71,7 @@ public class MainSubscriber<T> extends Subscriber<T> {
             Toast.makeText(context, "网络中断，请检查您的网络状态", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            System.out.println(e.getMessage());
         }
         if(flag) dialog.dismiss();
         ((Activity)context).finish();

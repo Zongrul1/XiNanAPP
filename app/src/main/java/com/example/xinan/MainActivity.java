@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         vp.setAdapter(mAdapter);
         send = (Button)findViewById(R.id.send);
         Drawable[] drawables1 = send.getCompoundDrawables(); //获取图片
-        Rect r = new Rect(0, 0, drawables1[1].getMinimumWidth() /3, drawables1[1].getMinimumHeight() /3); //设置图片参数
+        Rect r = new Rect(0, 0, drawables1[1].getMinimumWidth() /4, drawables1[1].getMinimumHeight() /4); //设置图片参数
         drawables1[1].setBounds(r);
         send.setCompoundDrawables(null,null,drawables1[1],null);  //设置到控件的位置（左，上，右，下）
         send.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
         search = (Button)findViewById(R.id.search);
         Drawable[] drawables2 = search.getCompoundDrawables(); //获取图片
-        r = new Rect(0, 0, drawables2[1].getMinimumWidth() /3, drawables2[1].getMinimumHeight() /3); //设置图片参数
+        r = new Rect(0, 0, drawables2[1].getMinimumWidth() /4, drawables2[1].getMinimumHeight() /4); //设置图片参数
         drawables2[1].setBounds(r);
         search.setCompoundDrawables(null,null,drawables2[1],null);  //设置到控件的位置（左，上，右，下）
         search.setOnClickListener(new View.OnClickListener() {

@@ -8,17 +8,15 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/send">
         <Button
             android:id="@+id/back"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:text="返回"
-            android:textColor="#FFF"
-            android:textSize="20sp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:background="#00000000"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_back" />
         <TextView
             android:id="@+id/head"
             android:layout_width="80dp"
@@ -31,12 +29,18 @@
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
+            <com.example.xinan.View.URLImageView
+                android:id="@+id/pic"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                />
             <RelativeLayout
                 android:layout_marginTop="10dp"
                 android:background="@drawable/index"
@@ -73,7 +77,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:background="@drawable/index">
                 <TextView
@@ -100,28 +104,19 @@
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
             <LinearLayout
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/index">
                 <TextView
                     android:layout_marginTop="10dp"
                     android:id="@+id/fulltext"
-                    android:layout_marginLeft="25dp"
+                    android:padding="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="100dp">
                 </TextView>
-                <com.example.xinan.View.URLImageView
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:id="@+id/pic"
-                    android:layout_width="360dp"
-                    android:layout_height="360dp"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center"
-                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

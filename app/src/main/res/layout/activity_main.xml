@@ -35,6 +35,7 @@
                 android:layout_alignParentLeft="true"
                 android:text="\n点我\n发布物品"
                 android:gravity="left"
+                android:textColor="#FFF"
                 android:drawableTop="@drawable/board"
                 android:textSize="20dp"/>
             <Button
@@ -46,6 +47,7 @@
                 android:layout_alignParentRight="true"
                 android:text="\n点我\n寻找东西"
                 android:gravity="left"
+                android:textColor="#FFF"
                 android:drawableTop="@drawable/lens"
                 android:textSize="20dp"/>
         </RelativeLayout>

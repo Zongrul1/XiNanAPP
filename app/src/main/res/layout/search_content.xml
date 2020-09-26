@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/index">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
         <com.example.xinan.View.CircleImageView
             android:id="@+id/avater"
             android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:src="@drawable/avater">
@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textSize="18sp"
@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/tag"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="username"
             android:background="@color/send"
@@ -42,24 +42,31 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
+        <com.example.xinan.View.URLImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:scaleType="fitXY">
+        </com.example.xinan.View.URLImageView>
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="10dp"
             android:textSize="20sp"
             android:layout_height="wrap_content">
         </TextView>
         <TextView
             android:id = "@+id/description"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
         <TextView
             android:id = "@+id/time"
             android:layout_width="100dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>

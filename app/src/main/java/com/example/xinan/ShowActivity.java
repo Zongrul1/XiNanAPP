@@ -1,6 +1,7 @@
 package com.example.xinan;
 
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -100,7 +101,9 @@ public class ShowActivity extends AppCompatActivity {
         fulltext.setText(con.getDescription());
         price.setText("￥" + con.getPrice());
         tag.setText(con.getTitle());
-        pic.setImageURL(con.getPic());
+        if(con.getPic() != null && con.getPic().length() > 0) pic.setImageURL(con.getPic());
+        else pic.setBackground(getResources().getDrawable((R.drawable.banner3)));
+
     }
 }
 
