@@ -1,6 +1,14 @@
 # 西南闲置APP
 ![](mini.png)
 
+
+## V1.7
+### 版本日志
+1.完成了Glide对原有的URLImageView的替换，制作了加载时的淡出动画以及配置了加载前和加载失败的图片。
+
+### 实际演示 
+![](gif/V1.7.gif)
+
 ## V1.6
 ### 版本日志
 1.将所有ListView架构替换成RecyclerView，并将搜索页面更换成瀑布流架构。  
@@ -8,13 +16,13 @@
 3.更改UI颜色以及icon。
 
 ### 展望
-1.利用glide代替自定义URLImageView（首要任务）。  
+1.利用Glide代替自定义URLImageView（首要任务）。  
 2.制作menu替换按钮切换。
 
 ### 实际演示 
 ![](gif/V1.6.gif)
 
-## V1.51
+## V1.55
 ### 版本日志
 1.修复一个小bug，发布界面的输入框用background="@null"替代minlines，以取消输入框下划线。  
 2.对网络错误的处理进行了微调。

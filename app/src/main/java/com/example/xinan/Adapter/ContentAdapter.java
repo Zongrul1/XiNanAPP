@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.xinan.R;
 import com.example.xinan.ShowActivity;
 import com.example.xinan.View.URLImageView;
@@ -25,10 +28,14 @@ import java.util.List;
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
     private List<Content> contents;
     private int resourceId;
+    private String HttpsUrl;
+    private Context context;
 
-    public ContentAdapter(int resource, List<Content> contents) {
+    public ContentAdapter(int resource, List<Content> contents,Context context) {
         this.contents = contents;
         resourceId = resource;
+        HttpsUrl = "http://img.xnxz.top/";
+        this.context = context;
     }
 
     @NonNull
@@ -47,7 +54,13 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
         holder.title.setText(contents.get(position).getTitle());
         holder.time.setText(contents.get(position).getDateBt());
         holder.id = contents.get(position).getId();
-        if(contents.get(position).getPic() != null && contents.get(position).getPic().length() > 0) holder.image.setImageURL(contents.get(position).getPic());
+        if(contents.get(position).getPic() != null && contents.get(position).getPic().length() > 0) {
+            Glide.with(context)
+                    .load(HttpsUrl + contents.get(position).getPic())
+                    .apply(new RequestOptions().placeholder(R.drawable.banner1).error(R.drawable.banner3))//加载前图片，加载失败图片
+                    .transition(DrawableTransitionOptions.withCrossFade())//渐变
+                    .into(holder.image);
+        }
         else holder.image.setVisibility(View.GONE);
     }
 

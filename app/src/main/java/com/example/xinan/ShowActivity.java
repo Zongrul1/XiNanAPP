@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.xinan.Subscriber.HelperSubscriber;
 import com.example.xinan.Subscriber.MainSubscriber;
 import com.example.xinan.View.LoadingDialog;
@@ -42,6 +45,7 @@ public class ShowActivity extends AppCompatActivity {
     private String id;
     private Content con;
     private HelperSubscriber getDetail;
+    private String HttpsUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class ShowActivity extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         //接收name值
         Typeface typeface = ResourcesCompat.getFont(this, R.font.az);
+        HttpsUrl = "http://img.xnxz.top/";
         id = bundle.getString("id");
         setContentView(R.layout.activity_show);
         back = findViewById(R.id.back);
@@ -101,9 +106,13 @@ public class ShowActivity extends AppCompatActivity {
         fulltext.setText(con.getDescription());
         price.setText("￥" + con.getPrice());
         tag.setText(con.getTitle());
-        if(con.getPic() != null && con.getPic().length() > 0) pic.setImageURL(con.getPic());
-        else pic.setBackground(getResources().getDrawable((R.drawable.banner3)));
-
+//        if(con.getPic() != null && con.getPic().length() > 0) pic.setImageURL(con.getPic());
+//        else pic.setBackground(getResources().getDrawable((R.drawable.banner3)));
+        Glide.with(this)
+                .load(HttpsUrl + con.getPic())
+                .apply(new RequestOptions().placeholder(R.drawable.loading_pic).error(R.drawable.banner3))//加载前图片，加载失败图片
+                .transition(DrawableTransitionOptions.withCrossFade())//渐变
+                .into(pic);
     }
 }
 

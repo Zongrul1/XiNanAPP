@@ -71,7 +71,7 @@ public class searchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.search_area, container, false);
         listView = view.findViewById(R.id.list_view);
-        adapter = new ContentAdapter(R.layout.search_content, cons);
+        adapter = new ContentAdapter(R.layout.search_content, cons,getActivity());
         listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         listView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         listView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
