@@ -5,77 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
+        android:layout_height="match_parent"
+        android:id="@+id/layout_fragment"
+        android:layout_above="@+id/nav_view"
+        android:orientation="vertical">
+    </LinearLayout>
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/ViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <Button
-                android:id="@+id/send"
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/send"
-                android:layout_alignParentLeft="true"
-                android:text="\n点我\n发布物品"
-                android:gravity="left"
-                android:textColor="#FFF"
-                android:drawableTop="@drawable/board"
-                android:textSize="20dp"/>
-            <Button
-                android:id="@+id/search"
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/search"
-                android:layout_alignParentRight="true"
-                android:text="\n点我\n寻找东西"
-                android:gravity="left"
-                android:textColor="#FFF"
-                android:drawableTop="@drawable/lens"
-                android:textSize="20dp"/>
-        </RelativeLayout>
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-                <TextView
-                    android:id="@+id/recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="推荐阅读"
-                    android:gravity="center"
-                    android:textSize="30sp"
-                    android:background="@drawable/index">
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-            <fragment
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/choose_area_fragment"
-                android:name="com.example.xinan.chooseFragment"
-                android:layout_width="match_parent"
-                android:layout_height="280dp" />
-
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="?android:attr/windowBackground"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
 
 </RelativeLayout>

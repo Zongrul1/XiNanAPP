@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,7 +76,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
         TextView tag;
         TextView description;
         TextView time;
-        URLImageView image;
+        ImageView image;
         int id;
 
         ViewHolder(View view) {

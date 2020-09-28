@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!--点击背景-->
+<item android:state_pressed="true">
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- 填充的颜色-->
+        <solid android:color="@color/searchPress" />
+        <!-- 设置按钮的四个角为弧形 -->
+        <!-- android:radius 弧形的半径 -->
+        <corners android:radius="10dp" />
+    </shape>
+</item>
+<!--默认背景-->
+<item>
+    <shape>
+        <solid android:color="@color/change" />
+        <corners android:radius="10dp" />
+    </shape>
+</item>
+</selector>
+

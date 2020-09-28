@@ -42,12 +42,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
-        <com.example.xinan.View.URLImageView
+        <ImageView
             android:id="@+id/image"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="fitXY">
-        </com.example.xinan.View.URLImageView>
+        </ImageView>
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"

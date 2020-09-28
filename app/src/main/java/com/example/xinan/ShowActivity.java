@@ -110,7 +110,7 @@ public class ShowActivity extends AppCompatActivity {
 //        else pic.setBackground(getResources().getDrawable((R.drawable.banner3)));
         Glide.with(this)
                 .load(HttpsUrl + con.getPic())
-                .apply(new RequestOptions().placeholder(R.drawable.loading_pic).error(R.drawable.banner3))//加载前图片，加载失败图片
+                .apply(new RequestOptions().placeholder(R.drawable.banner1).error(R.drawable.banner3))//加载前图片，加载失败图片
                 .transition(DrawableTransitionOptions.withCrossFade())//渐变
                 .into(pic);
     }
