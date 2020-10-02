@@ -117,11 +117,13 @@ public class MainFragment extends Fragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Message message = Message.obtain();
-                message.what = 1;
-                handler.sendMessage(message);
-                Toast.makeText(getActivity(),"刷新成功", Toast.LENGTH_SHORT).show();
-                swipe.setRefreshing(false);
+                if(XinanApplication.getCookie() != null) {//安全措施
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    handler.sendMessage(message);
+                    Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+                    swipe.setRefreshing(false);
+                }
             }
         });
         recommend.setTypeface(typeface);
