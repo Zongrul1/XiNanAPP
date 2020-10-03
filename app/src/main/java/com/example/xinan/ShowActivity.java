@@ -9,12 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.xinan.Subscriber.HelperSubscriber;
 import com.example.xinan.Subscriber.MainSubscriber;
 import com.example.xinan.View.LoadingDialog;
@@ -113,7 +118,12 @@ public class ShowActivity extends AppCompatActivity {
                 .load(HttpsUrl + con.getPic())
                 .apply(new RequestOptions().placeholder(R.drawable.banner1).error(R.drawable.banner3))//加载前图片，加载失败图片
                 .transition(DrawableTransitionOptions.withCrossFade())//渐变
-                .into(pic);
+                .into(new SimpleTarget<Drawable>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        pic.setBackground(resource);
+                    }
+                });
     }
 }
 

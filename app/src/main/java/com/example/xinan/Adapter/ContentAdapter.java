@@ -54,14 +54,15 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.name.setText(contents.get(position).getNick());
         holder.tag.setText(contents.get(position).getTag());
         holder.description.setText(contents.get(position).getDescription());
         holder.title.setText(contents.get(position).getTitle());
         holder.time.setText(contents.get(position).getDateBt());
         holder.id = contents.get(position).getId();
-        if(contents.get(position).getPic() != null && contents.get(position).getPic().length() > 0) {
+        if(contents.get(position).getPic().length() > 0) {
+            holder.image.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(HttpsUrl + contents.get(position).getPic())
                     .apply(new RequestOptions().placeholder(R.drawable.banner1).error(R.drawable.banner3))//加载前图片，加载失败图片
