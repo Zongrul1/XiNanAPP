@@ -17,6 +17,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,13 +114,19 @@ public class SendFragment extends Fragment {
         select.setTypeface(typeface);
         mainActivity = (MainActivity) getActivity();
         navView = mainActivity.getNavView();
+        if(picturePath.length() == 0) pic.setVisibility(View.GONE);
         sendContent = new HelperSubscriber<Response<ResponseBody>>() {
             @Override
-            public void onNext(Response<ResponseBody> response) throws IOException {
+            public void onNext(final Response<ResponseBody> response) throws IOException {
                 //loading
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        try {
+                            Log.d("TAG",response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         LoadingDialog.Builder loadBuilder = new LoadingDialog.Builder(getActivity())
                                 .setMessage("发送中...")
                                 .setCancelable(false)
@@ -250,6 +257,7 @@ public class SendFragment extends Fragment {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             picturePath = cursor.getString(columnIndex);
             pic.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            pic.setVisibility(View.VISIBLE);
         }
     }
 

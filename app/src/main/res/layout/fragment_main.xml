@@ -29,13 +29,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/ViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/index">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="欢迎进入西南大学闲置论坛! "
+                    android:textSize="15sp"
+                    android:textColor="@color/text"
+                    >
+                </TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="在这里，你将体验前所未有的闲置发布体验，简洁，上手快，可玩性高。
+本应用程序把服务同学放在最高宗旨，不断改进，致力于为同学们提供好玩易用的校园生活平台."
+                    android:textSize="15sp"
+                    android:textColor="@color/text">
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
                 <TextView
@@ -45,14 +69,15 @@
                     android:text="推荐阅读"
                     android:gravity="center"
                     android:textSize="30sp"
+                    android:textColor="@color/text"
                     android:background="@drawable/index">
                 </TextView>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/swipe"/>
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

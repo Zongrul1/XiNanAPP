@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class ShowActivity extends AppCompatActivity {
     private TextView tag;
     private TextView price;
     private TextView fulltext;
-    private URLImageView pic;
+    private ImageView pic;
     private String id;
     private Content con;
     private HelperSubscriber getDetail;

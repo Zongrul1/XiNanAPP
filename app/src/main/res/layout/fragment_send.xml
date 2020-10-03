@@ -39,40 +39,64 @@
                             android:layout_height="40dp">
                             <TextView
                                 android:id="@+id/textType"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="5dp"
                                 android:layout_width="wrap_content"
+                                android:padding="5dp"
                                 android:layout_height="match_parent"
+                                android:gravity="center"
                                 android:text="我捡到了"
+                                android:textColor="@color/text"
                                 android:textSize="20sp">
                             </TextView>
                             <EditText
                                 android:id="@+id/title"
-                                android:layout_marginLeft="10dp"
                                 android:layout_width="200dp"
+                                android:padding="5dp"
                                 android:layout_height="match_parent"
                                 android:text="开发测试用途">
                             </EditText>
                         </LinearLayout>
-                    <RelativeLayout
-                        android:id="@+id/desLayout"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
+                        android:id="@+id/tagLayout"
                         android:layout_below="@+id/titleLayout">
                         <TextView
-                            android:id="@+id/des"
-                            android:layout_marginLeft="10dp"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="物品标签"
+                            android:textColor="@color/text"
+                            android:gravity="center"
+                            android:textSize="20sp">
+                        </TextView>
+                        <EditText
+                            android:id="@+id/tag"
+                            android:layout_width="200dp"
+                            android:padding="5dp"
+                            android:layout_height="match_parent"
+                            android:text="工作人员">
+                        </EditText>
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/typeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/tagLayout">
+                        <TextView
+                            android:id="@+id/type"
+                            android:padding="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:textSize="20sp"
                             android:gravity="center"
-                            android:text="物品描述">
+                            android:textColor="@color/text"
+                            android:text="类型选择">
                         </TextView>
                         <ToggleButton
                             android:id="@+id/change"
                             android:layout_width="100dp"
                             android:layout_height="30dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="10dp"
                             android:textOn="闲置物品"
                             android:textOff="失物招领"
                             android:textColor="#FFF"
@@ -81,6 +105,22 @@
                             android:layout_alignParentRight="true"
                             android:background="@drawable/send">
                         </ToggleButton>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/desLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/typeLayout">
+                        <TextView
+                            android:id="@+id/des"
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:textColor="@color/text"
+                            android:text="物品描述">
+                        </TextView>
                     </RelativeLayout>
                         <ScrollView
                             android:id="@+id/scroll_des"
@@ -99,9 +139,26 @@
                         android:hint="具体描述"
                         android:textSize="20dp"/>
                         </ScrollView>
+                    <RelativeLayout
+                        android:layout_below="@+id/scroll_des"
+                        android:id="@+id/photolayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+                        <ImageView
+                            android:id="@+id/pic"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_marginBottom="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/avater">
+                        </ImageView>
+                    </RelativeLayout>
                     <LinearLayout
                         android:id="@+id/priceWindow"
-                        android:layout_below="@+id/scroll_des"
+                        android:layout_below="@+id/photolayout"
                         android:layout_width="match_parent"
                         android:layout_height="40dp">
                         <TextView
@@ -110,6 +167,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="价钱"
+                            android:textColor="@color/text"
                             android:textSize="20sp">
                         </TextView>
                         <EditText
@@ -124,42 +182,6 @@
                         </EditText>
                     </LinearLayout>
                     </RelativeLayout>
-                <RelativeLayout
-                    android:background="@drawable/index"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        android:id="@+id/pic_text"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:textSize="25sp"
-                        android:text="图片上传"></TextView>
-                    <Button
-                        android:id="@+id/pic_button"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="80dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/send"
-                        android:text="选择图片"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#FFF"
-                        android:textSize="18sp"
-                        android:layout_alignParentRight="true"></Button>
-                    <ImageView
-                        android:id="@+id/pic"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_below="@+id/pic_text"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/avater">
-                    </ImageView>
-                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -175,29 +197,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="个人联系信息"
+                            android:textColor="@color/text"
                             android:gravity="center"
                             android:textSize="24sp">
                         </TextView>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45dp">
-                        <TextView
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="标签"
-                            android:gravity="center"
-                            android:textSize="20sp">
-                        </TextView>
-                        <EditText
-                            android:id="@+id/tag"
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="200dp"
-                            android:layout_height="match_parent"
-                            android:text="工作人员">
-                        </EditText>
                     </LinearLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -208,6 +211,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:textSize="20sp"
+                            android:textColor="@color/text"
                             android:gravity="center"
                             android:text="叫我">
                         </TextView>
@@ -230,6 +234,7 @@
                             android:layout_height="50dp"
                             android:textSize="20sp"
                             android:gravity="center"
+                            android:textColor="@color/text"
                             android:text="手机">
                         </TextView>
                         <EditText
@@ -265,8 +270,19 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/index">
         <Button
+            android:id="@+id/pic_button"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/icon_photo"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="true"></Button>
+        <Button
             android:layout_alignParentRight="true"
             android:id="@+id/send"
+            android:layout_marginRight="10dp"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:text="发布"

@@ -2,6 +2,8 @@ package com.example.xinan.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.xinan.R;
 import com.example.xinan.ShowActivity;
 import com.example.xinan.View.URLImageView;
@@ -48,7 +54,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         holder.name.setText(contents.get(position).getNick());
         holder.tag.setText(contents.get(position).getTag());
         holder.description.setText(contents.get(position).getDescription());
@@ -60,7 +66,12 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
                     .load(HttpsUrl + contents.get(position).getPic())
                     .apply(new RequestOptions().placeholder(R.drawable.banner1).error(R.drawable.banner3))//加载前图片，加载失败图片
                     .transition(DrawableTransitionOptions.withCrossFade())//渐变
-                    .into(holder.image);
+                    .into(new SimpleTarget<Drawable>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            holder.image.setBackground(resource);
+                        }
+                    });
         }
         else holder.image.setVisibility(View.GONE);
     }
@@ -81,11 +92,11 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHold
 
         ViewHolder(View view) {
             super(view);
-            name = (TextView) view.findViewById(R.id.name);
-            description = (TextView) view.findViewById(R.id.description);
-            tag = (TextView) view.findViewById(R.id.tag);
-            title = (TextView) view.findViewById(R.id.title);
-            time = (TextView) view.findViewById(R.id.time);
+            name = view.findViewById(R.id.name);
+            description = view.findViewById(R.id.description);
+            tag = view.findViewById(R.id.tag);
+            title = view.findViewById(R.id.title);
+            time = view.findViewById(R.id.time);
             image = view.findViewById(R.id.image);
             // To show how to add click listener to a item in recyclerView
             // Set onClickListener for the fruit array;

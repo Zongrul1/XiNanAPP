@@ -131,7 +131,7 @@ public class MainFragment extends Fragment {
         initRunnable();
         listView = view.findViewById(R.id.list_view);
         adapter = new NewsAdapter(R.layout.index_list, news);
-        listView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        listView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         listView.setAdapter(adapter);
         return view;
     }

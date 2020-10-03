@@ -73,9 +73,7 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         listView = view.findViewById(R.id.list_view);
         adapter = new ContentAdapter(R.layout.search_content, cons,getActivity());
-        listView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        listView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        listView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.HORIZONTAL));
+        listView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         listView.setAdapter(adapter);
         //字体设置
         Typeface typeface = ResourcesCompat.getFont(getActivity(),R.font.az);
