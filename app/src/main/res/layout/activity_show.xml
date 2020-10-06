@@ -19,11 +19,11 @@
             android:background="@drawable/ic_back" />
         <TextView
             android:id="@+id/head"
-            android:layout_width="80dp"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
-            android:text="详情"
+            android:text="物品详情"
             android:textColor="#FFF"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_centerInParent="true"
             android:gravity="center"/>
     </RelativeLayout>

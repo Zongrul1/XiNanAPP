@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.xinan.Adapter.ContentAdapter;
+import com.example.xinan.Adapter.FmPagerAdapter;
 import com.example.xinan.Subscriber.HelperSubscriber;
 import com.example.xinan.Subscriber.MainSubscriber;
 import com.example.xinan.db.Content;
 import com.example.xinan.util.RxRetrofitUtil;
 import com.example.xinan.util.Utility;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,25 +44,21 @@ import retrofit2.Response;
 
 
 public class SearchFragment extends Fragment {
-    private RecyclerView listView;
-    private ContentAdapter adapter;
-    private HelperSubscriber getSearch;
     private Button find;
     private TextView head;
+
+    public EditText getSearch() {
+        return search;
+    }
+
     private EditText search;
-    private ToggleButton change;
     private SwipeRefreshLayout swipe;
-    private int type;
-    List<Content> cons = new ArrayList<>();
-    private final Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            Bundle bundle = msg.getData();
-            requestContent(bundle.getString("search"),bundle.getString("type"));
-            return false;
-            //在这里实现ui更新的效果
-        }
-    });
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private FmPagerAdapter pagerAdapter;
+
+
+
 
 
     @Override
@@ -71,23 +71,18 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        listView = view.findViewById(R.id.list_view);
-        adapter = new ContentAdapter(R.layout.search_content, cons,getActivity());
-        listView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        listView.setAdapter(adapter);
         //字体设置
         Typeface typeface = ResourcesCompat.getFont(getActivity(),R.font.az);
         //初始化
-        type = 1;
         head = view.findViewById(R.id.head);
         find = view.findViewById(R.id.find);
         search = view.findViewById(R.id.search);
-        change = view.findViewById(R.id.change);
         swipe = view.findViewById(R.id.swipe);
+        tabLayout = view.findViewById(R.id.tablayout);
+        viewPager = view.findViewById(R.id.viewpager);
         //更改字体
         head.setTypeface(typeface);
         find.setTypeface(typeface);
-        change.setTypeface(typeface);
         find.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -95,9 +90,8 @@ public class SearchFragment extends Fragment {
                         Message message = new Message();
                         Bundle bundle = new Bundle();
                         bundle.putString("search",search.getText().toString());
-                        bundle.putString("type",String.valueOf(type));
                         message.setData(bundle);
-                        handler.sendMessage(message);
+                        pagerAdapter.getCurrentFragment().getHandler().sendMessage(message);
                     }
                 });
         //刷新
@@ -107,58 +101,47 @@ public class SearchFragment extends Fragment {
                 Message message = new Message();
                 Bundle bundle = new Bundle();
                 bundle.putString("search",search.getText().toString());
-                bundle.putString("type",String.valueOf(type));
                 message.setData(bundle);
-                handler.sendMessage(message);
+                pagerAdapter.getCurrentFragment().getHandler().sendMessage(message);
                 Toast.makeText(getActivity(),"刷新成功", Toast.LENGTH_SHORT).show();
                 swipe.setRefreshing(false);
             }
         });
-        change.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(type == 2) type = 1;
-                else if(type == 1) type = 2;
-                Message message = new Message();
-                Bundle bundle = new Bundle();
-                bundle.putString("search",search.getText().toString());
-                bundle.putString("type",String.valueOf(type));
-                message.setData(bundle);
-                handler.sendMessage(message);
-            }
-        });
+        tabinit();
         return view;
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getSearch = new HelperSubscriber<Response<ResponseBody>>() {
+    private void tabinit() {
+        tabLayout.addTab(tabLayout.newTab().setText("失物招领"));
+        tabLayout.addTab(tabLayout.newTab().setText("闲置物品"));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onNext(Response<ResponseBody> response) throws IOException {
-                try {
-                    final String responseText = response.body().string();
-                    cons.clear();
-                    Utility.handleContentResponse(cons, responseText);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                Message message = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putString("search",search.getText().toString());
+                message.setData(bundle);
+                pagerAdapter.getCurrentFragment().getHandler().sendMessage(message);
             }
-        };
-        //获取信息
-        requestContent("","1");
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        pagerAdapter = new FmPagerAdapter(this.getChildFragmentManager(),tabLayout.getTabCount(),SearchFragment.this);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
     }
 
-    public void requestContent(String key,String type) {
-        RxRetrofitUtil.getInstance().requestContent(new MainSubscriber<Response<ResponseBody>>(getSearch, getActivity(), true), type, "1", key);
-    }
+
 }
 
     /*

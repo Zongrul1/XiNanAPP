@@ -1,6 +1,13 @@
 # 西南闲置APP
 ![](mini.png)
 
+## V2.0
+### 版本日志
+1.在搜索页面上使用tablayout + viewpager结构代替原来的togglebutton切换。 
+ 
+### 实际演示 
+![](gif/V2.0.gif)
+
 ## V1.95
 ### 版本日志
 1.紧急修复一个图片加载bug，因为设置了setvisibility，会导致搜索页面中有时候图片会刷新不出来，对此bug进行了修复。  

@@ -13,19 +13,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/send">
+                android:background="@drawable/send_bar">
                 <TextView
                     android:id="@+id/head"
                     android:layout_width="160dp"
                     android:layout_height="match_parent"
                     android:text="拾物登记"
                     android:textColor="#FFF"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:layout_centerInParent="true"
                     android:gravity="center"/>
             </RelativeLayout>
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
