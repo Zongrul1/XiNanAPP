@@ -1,6 +1,27 @@
 # 西南闲置APP
-![](mini.png)
+一个基于用Go编写的微信小程序后端开发的校园生活互助平台应用程序，拥有获取信息列表以及发布
+信息两个功能模块。
+![](image/mini.png)  
 
+# ScreenShot
+
+<div align="left">
+<img src="image/home.png" height="330" width="190" >
+
+<img src="image/list1.png" height="330" width="190" >
+
+<img src="image/list2.png" height="330" width="190" >
+
+ </div>
+
+<div align="left">
+<img src="image/content.png" height="330" width="190" >
+
+<img src="image/send1.png" height="330" width="190" >
+
+<img src="image/send2.png" height="330" width="190" >
+
+ </div>
 ## V2.0
 ### 版本日志
 1.在搜索页面上使用tablayout + viewpager结构代替原来的togglebutton切换。 
